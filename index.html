@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Escuela de Música Misional — Santiago de Chiquitos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #C89A3A;
+      --gold-light: #E8C96A;
+      --dark: #1A1208;
+      --cream: #F5EDD8;
+      --text-muted: rgba(245,237,216,0.70);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--dark);
+      color: var(--cream);
+      font-family: 'Source Sans 3', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* LANG TOGGLE */
+    .lang-toggle {
+      position: fixed;
+      top: 1.2rem;
+      right: 1.5rem;
+      z-index: 100;
+      display: flex;
+      border: 1px solid rgba(200,154,58,0.4);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .lang-toggle button {
+      background: transparent;
+      border: none;
+      color: var(--gold);
+      padding: 0.35rem 0.75rem;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .lang-toggle button.active {
+      background: var(--gold);
+      color: var(--dark);
+    }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding-bottom: 6rem;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('7f0bc874-88ad-46ab-b418-c8e24759057f.png');
+      background-size: cover;
+      background-position: center 20%;
+      filter: brightness(0.45);
+      transform: scale(1.03);
+      transition: transform 8s ease;
+    }
+    .hero:hover .hero-bg { transform: scale(1.0); }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(26,18,8,0.95) 0%, rgba(26,18,8,0.2) 60%, transparent 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 780px;
+      padding: 0 2rem;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 6vw, 5rem);
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--cream);
+      margin-bottom: 1.2rem;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: var(--text-muted);
+      max-width: 540px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--dark);
+      padding: 0.9rem 2.5rem;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+    }
+
+    /* STATS */
+    .stats {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      border-bottom: 1px solid rgba(200,154,58,0.15);
+    }
+    .stat {
+      flex: 1;
+      min-width: 150px;
+      max-width: 220px;
+      padding: 2.2rem 1rem;
+      text-align: center;
+      border-right: 1px solid rgba(200,154,58,0.12);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.6rem;
+      color: var(--gold);
+      display: block;
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .stat-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(245,237,216,0.45);
+    }
+
+    /* PHOTO GRID */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 340px 340px;
+      gap: 6px;
+      margin: 6px;
+    }
+
+    .photo-grid .p1 { grid-column: 1 / 3; grid-row: 1; }
+    .photo-grid .p2 { grid-column: 3;     grid-row: 1; }
+    .photo-grid .p3 { grid-column: 1;     grid-row: 2; }
+    .photo-grid .p4 { grid-column: 2 / 4; grid-row: 2; }
+
+    .grid-photo {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .grid-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+    .grid-photo:hover img { transform: scale(1.04); }
+
+    /* ABOUT */
+    .about {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 7rem 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .section-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--cream);
+      margin-bottom: 1.5rem;
+    }
+    h2 em { font-style: italic; color: var(--gold-light); }
+
+    .divider {
+      width: 48px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.5;
+      margin: 1.5rem 0;
+    }
+
+    p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--text-muted);
+      margin-bottom: 1.1rem;
+    }
+
+    /* FULL WIDTH PHOTO */
+    .full-photo {
+      height: 480px;
+      overflow: hidden;
+      position: relative;
+    }
+    .full-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      display: block;
+    }
+    .full-photo-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 2rem;
+      background: linear-gradient(to top, rgba(26,18,8,0.85), transparent);
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* CAMPAIGN */
+    .campaign {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 7rem 2rem;
+    }
+
+    .campaign-inner {
+      border: 1px solid rgba(200,154,58,0.25);
+      padding: 4rem;
+      background: linear-gradient(135deg, rgba(200,154,58,0.05), transparent);
+    }
+
+    .goal-row {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin: 2.5rem 0 3rem;
+    }
+    .goal-card {
+      flex: 1;
+      min-width: 160px;
+      border-left: 2px solid var(--gold);
+      padding-left: 1.5rem;
+    }
+    .goal-amount {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--gold);
+      display: block;
+    }
+    .goal-desc {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(245,237,216,0.45);
+      margin-top: 0.3rem;
+    }
+
+    /* CONTACT */
+    .contact {
+      border-top: 1px solid rgba(200,154,58,0.15);
+      text-align: center;
+      padding: 6rem 2rem;
+    }
+    .contact-links {
+      margin: 2rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      align-items: center;
+    }
+    .contact-links a, .contact-links span {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+    .contact-links a { color: var(--gold); }
+    .contact-links a:hover { color: var(--gold-light); }
+
+    footer {
+      border-top: 1px solid rgba(200,154,58,0.1);
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.72rem;
+      color: rgba(245,237,216,0.25);
+      letter-spacing: 0.1em;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-eyebrow { animation: fadeUp 0.7s ease both; }
+    .hero h1      { animation: fadeUp 0.7s 0.1s ease both; }
+    .hero-desc    { animation: fadeUp 0.7s 0.2s ease both; }
+    .btn-primary  { animation: fadeUp 0.7s 0.3s ease both; }
+
+    @media (max-width: 700px) {
+      .photo-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 220px 220px 220px;
+      }
+      .photo-grid .p1 { grid-column: 1 / 3; grid-row: 1; }
+      .photo-grid .p2 { grid-column: 1;     grid-row: 2; }
+      .photo-grid .p3 { grid-column: 2;     grid-row: 2; }
+      .photo-grid .p4 { grid-column: 1 / 3; grid-row: 3; }
+      .about { grid-template-columns: 1fr; gap: 0; padding: 4rem 1.5rem; }
+      .campaign-inner { padding: 2rem 1.5rem; }
+      .stats { flex-direction: column; }
+      .stat { border-right: none; border-bottom: 1px solid rgba(200,154,58,0.12); max-width: 100%; }
+      .stat:last-child { border-bottom: none; }
+      .full-photo { height: 300px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="lang-toggle">
+    <button class="active" onclick="setLang('es')" id="btn-es">ES</button>
+    <button onclick="setLang('en')" id="btn-en">EN</button>
+  </div>
+
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow" data-es="Santiago de Chiquitos · Bolivia" data-en="Santiago de Chiquitos · Bolivia">Santiago de Chiquitos · Bolivia</p>
+      <h1><span data-es="Escuela de Música <em>Misional</em>" data-en="School of <em>Misional</em> Music">Escuela de Música <em>Misional</em></span></h1>
+      <p class="hero-desc" data-es="Formamos niños y jóvenes en música y preservamos la tradición misional chiquitana — una herencia viva desde la época jesuítica." data-en="We train children and youth in music and preserve the Chiquitano misional tradition — a living heritage from the Jesuit era.">
+        Formamos niños y jóvenes en música y preservamos la tradición misional chiquitana — una herencia viva desde la época jesuítica.
+      </p>
+      <a href="#apoyanos" class="btn-primary" data-es="Apadriná un músico" data-en="Sponsor a musician">Apadriná un músico</a>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <span class="stat-number">70+</span>
+      <span class="stat-label" data-es="Niños y jóvenes" data-en="Children & youth">Niños y jóvenes</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">20+</span>
+      <span class="stat-label" data-es="Años de historia" data-en="Years of history">Años de historia</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">1.500</span>
+      <span class="stat-label" data-es="Habitantes en el pueblo" data-en="People in the village">Habitantes en el pueblo</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">4</span>
+      <span class="stat-label" data-es="Profesores de música" data-en="Music teachers">Profesores de música</span>
+    </div>
+  </div>
+
+  <div class="photo-grid">
+    <div class="grid-photo p1"><img src="muchachos.png" alt="Estudiantes de la escuela" /></div>
+    <div class="grid-photo p2"><img src="d26c75c2-dcd3-4ba1-9ddc-b4983c1a0a08.png" alt="Niño con violín" /></div>
+    <div class="grid-photo p3"><img src="d9de0279-da3d-4a37-8954-cd5273c7e909.png" alt="Ensayo con violines" /></div>
+    <div class="grid-photo p4"><img src="jarol.png" alt="Director musical" /></div>
+  </div>
+
+  <div class="about">
+    <div>
+      <p class="section-label" data-es="Quiénes somos" data-en="About us">Quiénes somos</p>
+      <h2 data-es="Una tradición que <em>no puede desaparecer</em>" data-en="A tradition that <em>cannot disappear</em>">Una tradición que <em>no puede desaparecer</em></h2>
+      <div class="divider"></div>
+      <p data-es="Santiago de Chiquitos es un pueblo de 1.500 habitantes en el oriente boliviano, dentro de la Reserva Municipal de Vida Silvestre Tucabaca. Desde la época de las misiones jesuíticas, la música forma parte del alma de este lugar." data-en="Santiago de Chiquitos is a village of 1,500 people in eastern Bolivia, inside the Tucabaca Municipal Wildlife Reserve. Since the Jesuit mission era, music has been part of the soul of this place.">
+        Santiago de Chiquitos es un pueblo de 1.500 habitantes en el oriente boliviano, dentro de la Reserva Municipal de Vida Silvestre Tucabaca. Desde la época de las misiones jesuíticas, la música forma parte del alma de este lugar.
+      </p>
+    </div>
+    <div style="padding-top: 3.5rem;">
+      <p data-es="Nuestra escuela forma a más de 70 niños y jóvenes en instrumentos, canto y dirección coral. El Coro y Orquesta Misional, fundado en 2004, interpreta obras del Archivo Misional de Chiquitos — uno de los repertorios barrocos más importantes de América Latina." data-en="Our school trains over 70 children and youth in instruments, singing, and choral direction. The Misional Choir and Orchestra, founded in 2004, performs works from the Chiquitos Mission Archive — one of the most important Baroque repertoires in Latin America.">
+        Nuestra escuela forma a más de 70 niños y jóvenes en instrumentos, canto y dirección coral. El Coro y Orquesta Misional, fundado en 2004, interpreta obras del Archivo Misional de Chiquitos — uno de los repertorios barrocos más importantes de América Latina.
+      </p>
+      <p data-es="Para muchos de estos jóvenes, la escuela es la única alternativa real en un lugar aislado. Sin financiamiento suficiente, esta institución corre el riesgo de desaparecer." data-en="For many of these young people, the school is the only real alternative in an isolated community. Without sufficient funding, this institution risks disappearing.">
+        Para muchos de estos jóvenes, la escuela es la única alternativa real en un lugar aislado. Sin financiamiento suficiente, esta institución corre el riesgo de desaparecer.
+      </p>
+    </div>
+  </div>
+
+  <div class="full-photo">
+    <img src="7f0bc874-88ad-46ab-b418-c8e24759057f.png" alt="Coro y orquesta misional" />
+    <span class="full-photo-caption" data-es="Coro y Orquesta Misional · Santiago de Chiquitos" data-en="Misional Choir and Orchestra · Santiago de Chiquitos">Coro y Orquesta Misional · Santiago de Chiquitos</span>
+  </div>
+
+  <div class="campaign" id="apoyanos">
+    <div class="campaign-inner">
+      <p class="section-label" data-es="Campaña 2026" data-en="2026 Campaign">Campaña 2026</p>
+      <h2 data-es="Apadriná un <em>músico del futuro</em>" data-en="Sponsor a <em>future musician</em>">Apadriná un <em>músico del futuro</em></h2>
+      <div class="divider"></div>
+      <p data-es="Con Bs. 1.000 al año — menos de Bs. 3 por día — cubrís un año completo de formación musical para un niño o joven de Santiago de Chiquitos." data-en="With Bs. 1,000 per year — less than Bs. 3 per day — you cover a full year of musical training for a child or youth in Santiago de Chiquitos.">
+        Con Bs. 1.000 al año — menos de Bs. 3 por día — cubrís un año completo de formación musical para un niño o joven de Santiago de Chiquitos.
+      </p>
+      <div class="goal-row">
+        <div class="goal-card">
+          <span class="goal-amount">Bs. 155.000</span>
+          <span class="goal-desc" data-es="Meta anual 2026" data-en="2026 annual goal">Meta anual 2026</span>
+        </div>
+        <div class="goal-card">
+          <span class="goal-amount">Bs. 1.000</span>
+          <span class="goal-desc" data-es="Aporte por padrino/a" data-en="Per sponsor / year">Aporte por padrino/a</span>
+        </div>
+        <div class="goal-card">
+          <span class="goal-amount">155</span>
+          <span class="goal-desc" data-es="Padrinos necesarios" data-en="Sponsors needed">Padrinos necesarios</span>
+        </div>
+      </div>
+      <a href="#contacto" class="btn-primary" data-es="Quiero apadrinar" data-en="I want to sponsor">Quiero apadrinar</a>
+    </div>
+  </div>
+
+  <div class="contact" id="contacto">
+    <p class="section-label" data-es="Contacto" data-en="Contact">Contacto</p>
+    <h2 data-es="Ponete en <em>contacto</em>" data-en="Get in <em>touch</em>">Ponete en <em>contacto</em></h2>
+    <div class="divider" style="margin: 1.5rem auto;"></div>
+    <div class="contact-links">
+      <a href="tel:+59178945211">+591 78945211</a>
+      <a href="https://www.facebook.com/emusachi" target="_blank">facebook.com/emusachi</a>
+      <span>Santiago de Chiquitos, Bolivia</span>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 Escuela de Música Misional Santiago de Chiquitos</p>
+  </footer>
+
+  <script>
+    function setLang(lang) {
+      document.getElementById('btn-es').classList.toggle('active', lang === 'es');
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      document.querySelectorAll('[data-es]').forEach(el => {
+        const text = el.getAttribute('data-' + lang);
+        if (text) el.innerHTML = text;
+      });
+    }
+  </script>
+
+</body>
+</html>
