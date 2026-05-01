@@ -74,8 +74,8 @@
     /* HERO */
     .hero {
       position: relative;
-      height: 55vh;
-      min-height: 420px;
+      height: 65vh;
+      min-height: 480px;
       display: flex;
       align-items: flex-end;
       padding-bottom: 5rem;
@@ -84,10 +84,10 @@
     .hero-bg {
       position: absolute;
       inset: 0;
-      background-image: url('muchachos.png');
+      background-image: url('Image%20Apr%2030%2C%202026%2C%2009_19_22%20PM.png');
       background-size: cover;
-      background-position: center 30%;
-      filter: brightness(0.35);
+      background-position: center 25%;
+      filter: brightness(0.32);
     }
     .hero-overlay {
       position: absolute;
@@ -157,6 +157,30 @@
       line-height: 1.85;
       color: var(--text-muted);
       margin-bottom: 1rem;
+    }
+
+    /* PHOTO STRIP */
+    .photo-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+      background: var(--dark);
+    }
+    .photo-strip-item {
+      aspect-ratio: 4/3;
+      overflow: hidden;
+    }
+    .photo-strip-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+      filter: brightness(0.85);
+      transition: filter 0.3s;
+      display: block;
+    }
+    .photo-strip-item img:hover {
+      filter: brightness(1);
     }
 
     /* BUDGET */
@@ -266,12 +290,6 @@
     .tier:hover {
       background: var(--dark-2);
     }
-    .tier.featured {
-      background: rgba(200,154,58,0.06);
-    }
-    .tier.featured:hover {
-      background: rgba(200,154,58,0.1);
-    }
 
     .tier-name {
       font-family: 'Playfair Display', serif;
@@ -320,9 +338,62 @@
       color: var(--gold-light);
     }
 
+    /* QR / DONATE */
+    .donate {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+    .donate h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 400;
+      color: var(--cream);
+      margin-bottom: 0.5rem;
+    }
+    .donate h2 em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+    .donate-divider {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.5;
+      margin: 1.5rem auto;
+    }
+    .donate p {
+      max-width: 420px;
+      margin: 0 auto 2.5rem;
+      text-align: center;
+    }
+    .qr-wrap {
+      display: inline-block;
+      background: #fff;
+      padding: 1rem;
+      border-radius: 4px;
+      margin-bottom: 2rem;
+    }
+    .qr-wrap img {
+      display: block;
+      width: 200px;
+      height: 200px;
+      object-fit: contain;
+    }
+    .donate-details {
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      line-height: 2;
+    }
+    .donate-details strong {
+      color: var(--cream);
+      font-weight: 400;
+    }
+
     /* CONTACT */
     .contact {
-      border-top: 1px solid var(--border);
       text-align: center;
       padding: 5rem 2rem;
     }
@@ -396,6 +467,8 @@
     /* RESPONSIVE */
     @media (max-width: 680px) {
       .intro { grid-template-columns: 1fr; gap: 0; padding: 3rem 1.5rem; }
+      .photo-strip { grid-template-columns: 1fr; }
+      .photo-strip-item { aspect-ratio: 3/2; }
       .budget { padding: 3rem 1.5rem; }
       .budget-grid { grid-template-columns: 1fr; }
       .tiers { padding: 3rem 1.5rem 4rem; }
@@ -409,6 +482,7 @@
       .tier-amount { grid-column: 2; grid-row: 1 / 3; align-self: center; }
       .tier-desc { grid-column: 1; font-size: 0.82rem; }
       nav { padding: 1rem 1.5rem; }
+      .qr-wrap img { width: 160px; height: 160px; }
     }
   </style>
 </head>
@@ -451,6 +525,19 @@
     </div>
   </div>
 
+  <!-- PHOTO STRIP -->
+  <div class="photo-strip">
+    <div class="photo-strip-item">
+      <img src="Image%20Apr%2030%2C%202026%2C%2009_34_11%20PM.png" alt="Estudiante de violín" />
+    </div>
+    <div class="photo-strip-item">
+      <img src="30%2C%202026%2C%2009_35_01%20PM.png" alt="Estudiante de violín" />
+    </div>
+    <div class="photo-strip-item">
+      <img src="Apr%2030%2C%202026%2C%2009_35_58%20PM.png" alt="Coro de la escuela" />
+    </div>
+  </div>
+
   <!-- BUDGET -->
   <div class="budget">
     <span class="section-label" data-es="Presupuesto anual 2026" data-en="2026 Annual Budget">Presupuesto anual 2026</span>
@@ -490,7 +577,7 @@
           Amigo del Coro
         </div>
         <p class="tier-desc" data-es="Cuerdas y materiales básicos para un estudiante durante el año." data-en="Strings and basic materials for one student for the year.">Cuerdas y materiales básicos para un estudiante durante el año.</p>
-        <div class="tier-amount">Bs. 100 <span data-es="por año" data-en="per year">por año</span></div>
+        <div class="tier-amount">Bs. 1–99 <span data-es="por año" data-en="per year">por año</span></div>
       </div>
 
       <div class="tier">
@@ -499,7 +586,7 @@
           Padrino Chiquitano
         </div>
         <p class="tier-desc" data-es="Cubre un mes de clases para un niño o joven de la escuela." data-en="Covers one month of classes for a child or youth at the school.">Cubre un mes de clases para un niño o joven de la escuela.</p>
-        <div class="tier-amount">Bs. 200 <span data-es="por año" data-en="per year">por año</span></div>
+        <div class="tier-amount">Bs. 100–199 <span data-es="por año" data-en="per year">por año</span></div>
       </div>
 
       <div class="tier">
@@ -508,25 +595,25 @@
           Músico del Pueblo
         </div>
         <p class="tier-desc" data-es="Sostiene tres meses de formación musical para un estudiante." data-en="Sustains three months of musical training for one student.">Sostiene tres meses de formación musical para un estudiante.</p>
-        <div class="tier-amount">Bs. 350 <span data-es="por año" data-en="per year">por año</span></div>
+        <div class="tier-amount">Bs. 200–349 <span data-es="por año" data-en="per year">por año</span></div>
       </div>
 
-      <div class="tier featured">
+      <div class="tier">
         <div class="tier-name">
           <small data-es="Nivel 4" data-en="Level 4">Nivel 4</small>
           Guardián de la Tradición
         </div>
         <p class="tier-desc" data-es="Cubre medio año de formación completa para un niño o joven." data-en="Covers half a year of full training for one child or youth.">Cubre medio año de formación completa para un niño o joven.</p>
-        <div class="tier-amount">Bs. 600 <span data-es="por año" data-en="per year">por año</span></div>
+        <div class="tier-amount">Bs. 350–599 <span data-es="por año" data-en="per year">por año</span></div>
       </div>
 
-      <div class="tier featured">
+      <div class="tier">
         <div class="tier-name">
           <small data-es="Nivel 5" data-en="Level 5">Nivel 5</small>
           Custodio Misional
         </div>
         <p class="tier-desc" data-es="Un año completo de formación musical para un estudiante de Santiago de Chiquitos." data-en="A full year of musical training for one student from Santiago de Chiquitos.">Un año completo de formación musical para un estudiante de Santiago de Chiquitos.</p>
-        <div class="tier-amount">Bs. 1.000 <span data-es="por año" data-en="per year">por año</span></div>
+        <div class="tier-amount">Bs. 600–999 <span data-es="por año" data-en="per year">por año</span></div>
       </div>
 
       <div class="tier open">
@@ -538,6 +625,23 @@
         <div class="tier-amount">Bs. 1.000+ <span data-es="por año" data-en="per year">por año</span></div>
       </div>
 
+    </div>
+  </div>
+
+  <!-- QR DONATE -->
+  <div class="donate">
+    <span class="eyebrow" data-es="Cómo donar" data-en="How to donate">Cómo donar</span>
+    <h2 data-es="Transferencia <em>bancaria</em>" data-en="Bank <em>transfer</em>">Transferencia <em>bancaria</em></h2>
+    <div class="donate-divider"></div>
+    <p data-es="Escaneá el código QR con tu app de Banco Unión o transferí directamente a la cuenta." data-en="Scan the QR code with your Banco Unión app or transfer directly to the account.">Escaneá el código QR con tu app de Banco Unión o transferí directamente a la cuenta.</p>
+    <div class="qr-wrap">
+      <img src="qr-bancounion.jpeg" alt="QR Banco Unión" />
+    </div>
+    <div class="donate-details">
+      <div><strong data-es="Cuenta" data-en="Account">Cuenta</strong> &nbsp;10000056770148</div>
+      <div><strong data-es="Titular" data-en="Name">Titular</strong> &nbsp;MaryKathryn</div>
+      <div><strong data-es="Glosa" data-en="Reference">Glosa</strong> &nbsp;Conservatorio Santi</div>
+      <div><strong>Banco Unión S.A.</strong></div>
     </div>
   </div>
 
