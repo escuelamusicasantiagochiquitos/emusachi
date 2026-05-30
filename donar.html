@@ -392,6 +392,77 @@
       font-weight: 400;
     }
 
+    /* REGISTRO / SPONSOR FORM */
+    .reg {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 4rem 2.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .reg-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 400;
+      color: var(--cream);
+      margin-bottom: 0.4rem;
+    }
+    .reg-title em { font-style: italic; color: var(--gold-light); }
+    .reg-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.4rem;
+      margin-top: 2rem;
+    }
+    .reg-field { display: flex; flex-direction: column; }
+    .reg-full, .reg-check, .reg-form button { grid-column: 1 / -1; }
+    .reg-field label {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+    .reg-field input,
+    .reg-field select,
+    .reg-field textarea {
+      background: var(--dark-2);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      color: var(--cream);
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.95rem;
+      padding: 0.7rem 0.8rem;
+      width: 100%;
+    }
+    .reg-field input:focus,
+    .reg-field select:focus,
+    .reg-field textarea:focus { outline: none; border-color: var(--gold); }
+    .reg-field textarea { resize: vertical; }
+    .reg-check {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      cursor: pointer;
+    }
+    .reg-check input { margin-top: 0.2rem; accent-color: var(--gold); }
+    .reg-form button {
+      justify-self: start;
+      background: var(--gold);
+      color: var(--dark);
+      border: none;
+      border-radius: 3px;
+      padding: 0.8rem 2.2rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .reg-form button:hover { background: var(--gold-light); }
+
     /* CONTACT */
     .contact {
       text-align: center;
@@ -483,6 +554,8 @@
       .tier-desc { grid-column: 1; font-size: 0.82rem; }
       nav { padding: 1rem 1.5rem; }
       .qr-wrap img { width: 160px; height: 160px; }
+      .reg { padding: 3rem 1.5rem; }
+      .reg-form { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -635,25 +708,65 @@
     <div class="donate-divider"></div>
     <p data-es="Escaneá el código QR con tu app de Banco Unión o transferí directamente a la cuenta." data-en="Scan the QR code with your Banco Unión app or transfer directly to the account.">Escaneá el código QR con tu app de Banco Unión o transferí directamente a la cuenta.</p>
     <div class="qr-wrap">
-      <img src="qr-bancounion.jpeg" alt="QR Banco Unión" />
+      <img src="cropmusi.jpeg" alt="QR Banco Unión" />
     </div>
     <div class="donate-details">
       <div><strong data-es="Cuenta" data-en="Account">Cuenta</strong> &nbsp;10000056770148</div>
-      <div><strong data-es="Titular" data-en="Name">Titular</strong> &nbsp;MaryKathryn</div>
-      <div><strong data-es="Glosa" data-en="Reference">Glosa</strong> &nbsp;Conservatorio Santi</div>
       <div><strong>Banco Unión S.A.</strong></div>
     </div>
+  </div>
+
+  <!-- REGISTRO / SPONSOR FORM -->
+  <div class="reg">
+    <span class="section-label" data-es="Registro" data-en="Registration">Registro</span>
+    <h2 class="reg-title" data-es="Registrá tu <em>apadrinamiento</em>" data-en="Register your <em>sponsorship</em>">Registrá tu <em>apadrinamiento</em></h2>
+    <div class="divider"></div>
+    <p data-es="Dejanos tus datos después de tu transferencia y te contactamos para confirmar el aporte." data-en="Leave your details after your transfer and we'll contact you to confirm your contribution.">Dejanos tus datos después de tu transferencia y te contactamos para confirmar el aporte.</p>
+
+    <form class="reg-form" action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="fd44a6fc-0468-4bac-bbf8-d886c21b4921">
+      <input type="hidden" name="subject" value="Nuevo registro de apadrinamiento — EMUSACHI">
+      <!-- honeypot anti-spam: leave hidden/empty -->
+      <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off">
+
+      <div class="reg-field reg-full">
+        <label for="reg-name" data-es="Nombre (como desea ser listado en publicaciones)" data-en="Name (as you'd like to appear in publications)">Nombre (como desea ser listado en publicaciones)</label>
+        <input id="reg-name" name="name" type="text" required />
+      </div>
+      <div class="reg-field">
+        <label for="reg-email" data-es="Correo electrónico" data-en="Email">Correo electrónico</label>
+        <input id="reg-email" name="email" type="email" required />
+      </div>
+      <div class="reg-field">
+        <label for="reg-phone" data-es="WhatsApp / teléfono (opcional)" data-en="WhatsApp / phone (optional)">WhatsApp / teléfono (opcional)</label>
+        <input id="reg-phone" name="telefono" type="tel" />
+      </div>
+      <div class="reg-field reg-full">
+        <label for="reg-amount" data-es="Monto (Bs.)" data-en="Amount (Bs.)">Monto (Bs.)</label>
+        <input id="reg-amount" name="monto" type="number" min="0" required />
+      </div>
+      <div class="reg-field reg-full">
+        <label for="reg-msg" data-es="Mensaje (opcional)" data-en="Message (optional)">Mensaje (opcional)</label>
+        <textarea id="reg-msg" name="mensaje" rows="3"></textarea>
+      </div>
+
+      <label class="reg-check">
+        <input type="checkbox" name="anonimo" value="Sí, prefiere no aparecer" />
+        <span data-es="Prefiero no aparecer en listas públicas de donantes ni en publicaciones." data-en="I prefer not to appear in public donor lists or publications.">Prefiero no aparecer en listas públicas de donantes ni en publicaciones.</span>
+      </label>
+
+      <button type="submit" data-es="Enviar" data-en="Submit">Enviar</button>
+    </form>
   </div>
 
   <!-- CONTACT -->
   <div class="contact">
     <span class="eyebrow" data-es="Contacto" data-en="Contact">Contacto</span>
-    <h2 data-es="¿Querés <em>apadrinar</em>?" data-en="Want to <em>sponsor</em>?">¿Querés <em>apadrinar</em>?</h2>
     <div class="contact-divider"></div>
-    <p data-es="Escribinos por WhatsApp o seguinos en Facebook. Te explicamos cómo hacer tu aporte." data-en="Write to us on WhatsApp or follow us on Facebook. We'll explain how to make your contribution.">Escribinos por WhatsApp o seguinos en Facebook. Te explicamos cómo hacer tu aporte.</p>
     <div class="contact-links">
       <a href="https://wa.me/59178945211" target="_blank">WhatsApp · +591 78945211</a>
-      <a href="https://www.facebook.com/emusachi" target="_blank">facebook.com/emusachi</a>
+      <a href="https://www.facebook.com/escuelamusicasantiagochiquitos" target="_blank">facebook.com/escuelamusicasantiagochiquitos</a>
+      <a href="mailto:escuelamusicasantiagochiquitos@gmail.com">escuelamusicasantiagochiquitos@gmail.com</a>
       <span>Santiago de Chiquitos, Bolivia</span>
     </div>
   </div>
