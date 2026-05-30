@@ -70,6 +70,19 @@
       background: var(--gold);
       color: var(--dark);
     }
+    .nav-right { display: flex; align-items: center; gap: 1rem; }
+    .nav-donate {
+      background: var(--gold);
+      color: var(--dark);
+      text-decoration: none;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.4rem 1.1rem;
+      border-radius: 3px;
+      transition: background 0.2s;
+    }
+    .nav-donate:hover { background: var(--gold-light); }
 
     /* HERO */
     .hero {
@@ -181,6 +194,35 @@
     }
     .photo-strip-item img:hover {
       filter: brightness(1);
+    }
+
+    /* GROUP PHOTO */
+    .group-photo {
+      position: relative;
+      width: 100%;
+      height: clamp(300px, 48vh, 540px);
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .group-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      display: block;
+    }
+    .group-photo .credit {
+      position: absolute;
+      bottom: 0.6rem;
+      right: 0.9rem;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(245,237,216,0.75);
+      background: rgba(26,18,8,0.6);
+      padding: 0.3rem 0.65rem;
+      border-radius: 3px;
     }
 
     /* BUDGET */
@@ -563,9 +605,12 @@
 
   <nav>
     <a href="index.html" class="nav-home" data-es="← Inicio" data-en="← Home">← Inicio</a>
-    <div class="lang-toggle">
-      <button class="active" onclick="setLang('es')" id="btn-es">ES</button>
-      <button onclick="setLang('en')" id="btn-en">EN</button>
+    <div class="nav-right">
+      <a href="#donar" class="nav-donate" data-es="Donar" data-en="Donate">Donar</a>
+      <div class="lang-toggle">
+        <button class="active" onclick="setLang('es')" id="btn-es">ES</button>
+        <button onclick="setLang('en')" id="btn-en">EN</button>
+      </div>
     </div>
   </nav>
 
@@ -595,19 +640,6 @@
       <p data-es="La escuela depende casi en su totalidad de aportes voluntarios. Sin financiamiento estable, corre el riesgo de cerrar." data-en="The school depends almost entirely on voluntary contributions. Without stable funding, it risks closing.">
         La escuela depende casi en su totalidad de aportes voluntarios. Sin financiamiento estable, corre el riesgo de cerrar.
       </p>
-    </div>
-  </div>
-
-  <!-- PHOTO STRIP -->
-  <div class="photo-strip">
-    <div class="photo-strip-item">
-      <img src="Image%20Apr%2030%2C%202026%2C%2009_34_11%20PM.png" alt="Estudiante de violín" />
-    </div>
-    <div class="photo-strip-item">
-      <img src="30%2C%202026%2C%2009_35_01%20PM.png" alt="Estudiante de violín" />
-    </div>
-    <div class="photo-strip-item">
-      <img src="Apr%2030%2C%202026%2C%2009_35_58%20PM.png" alt="Coro de la escuela" />
     </div>
   </div>
 
@@ -701,8 +733,14 @@
     </div>
   </div>
 
+  <!-- GROUP PHOTO -->
+  <div class="group-photo">
+    <img src="WhatsApp%20Image%202026-05-30%20at%205.29.19%20PM.jpeg" alt="Coro y orquesta de la Escuela de Música Misional Santiago de Chiquitos" />
+    <span class="credit">Foto: Red Uno</span>
+  </div>
+
   <!-- QR DONATE -->
-  <div class="donate">
+  <div class="donate" id="donar">
     <span class="eyebrow" data-es="Cómo donar" data-en="How to donate">Cómo donar</span>
     <h2 data-es="Transferencia <em>bancaria</em>" data-en="Bank <em>transfer</em>">Transferencia <em>bancaria</em></h2>
     <div class="donate-divider"></div>
