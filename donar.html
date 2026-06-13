@@ -3,814 +3,432 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Apoyá la Escuela · Escuela de Música Misional</title>
+  <title>Apadriná un músico — Escuela de Música Misional</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --gold: #C89A3A;
-      --gold-light: #E8C96A;
-      --dark: #1A1208;
-      --dark-2: #221A0A;
-      --cream: #F5EDD8;
-      --text-muted: rgba(245,237,216,0.65);
-      --border: rgba(200,154,58,0.18);
+      --gold: #A87820;
+      --gold-light: #C89A3A;
+      --dark: #2C1E08;
+      --bg: #F7F0E3;
+      --bg-mid: #EDE3CE;
+      --text: #2C1E08;
+      --text-muted: rgba(44,30,8,0.58);
+      --border: rgba(168,120,32,0.22);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--dark);
-      color: var(--cream);
+      background: var(--bg);
+      color: var(--text);
       font-family: 'Source Sans 3', sans-serif;
       font-weight: 300;
       overflow-x: hidden;
     }
 
-    /* NAV */
-    nav {
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+
+    /* ── LANG TOGGLE ── */
+    .lang-toggle {
       position: fixed;
-      top: 0; left: 0; right: 0;
+      top: 1.2rem;
+      right: 1.5rem;
       z-index: 100;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.2rem 2.5rem;
-      background: linear-gradient(to bottom, rgba(26,18,8,0.95), transparent);
-    }
-    .nav-home {
-      font-size: 0.7rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--gold);
-      text-decoration: none;
-      opacity: 0.8;
-      transition: opacity 0.2s;
-    }
-    .nav-home:hover { opacity: 1; }
-
-    .lang-toggle {
-      display: flex;
-      border: 1px solid rgba(200,154,58,0.35);
-      border-radius: 3px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
       overflow: hidden;
+      background: var(--bg);
     }
     .lang-toggle button {
       background: transparent;
       border: none;
       color: var(--gold);
-      padding: 0.3rem 0.7rem;
+      padding: 0.35rem 0.75rem;
       font-family: 'Source Sans 3', sans-serif;
-      font-size: 0.72rem;
+      font-size: 0.75rem;
       letter-spacing: 0.1em;
       cursor: pointer;
       transition: background 0.2s;
     }
     .lang-toggle button.active {
       background: var(--gold);
-      color: var(--dark);
+      color: #fff;
     }
-    .nav-right { display: flex; align-items: center; gap: 1rem; }
-    .nav-donate {
-      background: var(--gold);
-      color: var(--dark);
-      text-decoration: none;
-      font-size: 0.7rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      padding: 0.4rem 1.1rem;
-      border-radius: 3px;
-      transition: background 0.2s;
-    }
-    .nav-donate:hover { background: var(--gold-light); }
 
-    /* HERO */
-    .hero {
-      position: relative;
-      height: 65vh;
-      min-height: 480px;
-      display: flex;
-      align-items: flex-end;
-      padding-bottom: 5rem;
-      overflow: hidden;
-    }
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background-image: url('Image%20Apr%2030%2C%202026%2C%2009_19_22%20PM.png');
-      background-size: cover;
-      background-position: center 25%;
-      filter: brightness(0.32);
-    }
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(26,18,8,1) 0%, rgba(26,18,8,0.3) 60%, transparent 100%);
-    }
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 2.5rem;
-      width: 100%;
-    }
-    .eyebrow {
-      font-size: 0.68rem;
-      letter-spacing: 0.35em;
+    /* ── BACK LINK ── */
+    .back-link {
+      position: fixed;
+      top: 1.15rem;
+      left: 1.5rem;
+      z-index: 100;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--gold);
-      margin-bottom: 1rem;
-      display: block;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s;
     }
-    .hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.2rem, 5vw, 4rem);
-      font-weight: 400;
-      line-height: 1.1;
-      color: var(--cream);
-    }
-    .hero h1 em {
-      font-style: italic;
-      color: var(--gold-light);
-    }
+    .back-link:hover { color: var(--gold-light); }
 
-    /* INTRO */
-    .intro {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 5rem 2.5rem 4rem;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: start;
+    /* ── PAGE HEADER ── */
+    .page-header {
+      padding: 8rem 2rem 4rem;
+      text-align: center;
       border-bottom: 1px solid var(--border);
-    }
-    .intro-left h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.5rem, 2.5vw, 2rem);
-      font-weight: 400;
-      line-height: 1.25;
-      color: var(--cream);
-      margin-bottom: 1.2rem;
-    }
-    .intro-left h2 em {
-      font-style: italic;
-      color: var(--gold-light);
-    }
-    .divider {
-      width: 40px;
-      height: 1px;
-      background: var(--gold);
-      opacity: 0.5;
-      margin-bottom: 1.5rem;
-    }
-    p {
-      font-size: 0.97rem;
-      line-height: 1.85;
-      color: var(--text-muted);
-      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.2s ease forwards;
     }
 
-    /* PHOTO STRIP */
-    .photo-strip {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 3px;
-      background: var(--dark);
-    }
-    .photo-strip-item {
-      aspect-ratio: 4/3;
-      overflow: hidden;
-    }
-    .photo-strip-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 20%;
-      filter: brightness(0.85);
-      transition: filter 0.3s;
-      display: block;
-    }
-    .photo-strip-item img:hover {
-      filter: brightness(1);
-    }
-
-    /* GROUP PHOTO */
-    .group-photo {
-      position: relative;
-      width: 100%;
-      height: clamp(300px, 48vh, 540px);
-      overflow: hidden;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-    .group-photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 30%;
-      display: block;
-    }
-    .group-photo .credit {
-      position: absolute;
-      bottom: 0.6rem;
-      right: 0.9rem;
-      font-size: 0.6rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(245,237,216,0.75);
-      background: rgba(26,18,8,0.6);
-      padding: 0.3rem 0.65rem;
-      border-radius: 3px;
-    }
-
-    /* BUDGET */
-    .budget {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 4rem 2.5rem;
-      border-bottom: 1px solid var(--border);
-    }
     .section-label {
-      font-size: 0.65rem;
+      font-size: 0.68rem;
       letter-spacing: 0.3em;
       text-transform: uppercase;
       color: var(--gold);
-      margin-bottom: 1.5rem;
-      display: block;
+      margin-bottom: 1rem;
     }
-    .budget-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      margin-top: 2rem;
-    }
-    .budget-item {
-      background: var(--dark);
-      padding: 2rem 1.8rem;
-    }
-    .budget-amount {
+
+    h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
-      color: var(--gold);
+      font-size: clamp(2rem, 5vw, 3.8rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 1.2rem;
+    }
+    h1 em { font-style: italic; color: var(--gold); }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 1.2rem;
+    }
+    h2 em { font-style: italic; color: var(--gold); }
+
+    .divider {
+      width: 48px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.4;
+      margin: 1.5rem auto;
+    }
+
+    p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--text-muted);
+      margin-bottom: 1.1rem;
+    }
+
+    /* ── PHOTO GALLERY ── */
+    .gallery {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 6px;
+      margin: 6px;
+    }
+
+    .gallery-item {
+      overflow: hidden;
+      height: 380px;
+      position: relative;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .gallery-item.visible { opacity: 1; transform: translateY(0); }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       display: block;
-      margin-bottom: 0.4rem;
+      transition: transform 0.7s ease;
     }
-    .budget-label {
-      font-size: 0.75rem;
-      letter-spacing: 0.08em;
-      color: var(--text-muted);
-      line-height: 1.5;
+    .gallery-item:hover img { transform: scale(1.05); }
+
+    /* ── DONATE BOX ── */
+    .donate-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 6rem 2rem;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
     }
-    .budget-total {
-      margin-top: 1px;
-      background: rgba(200,154,58,0.07);
-      padding: 1.5rem 1.8rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    .donate-wrap.visible { opacity: 1; transform: translateY(0); }
+
+    .donate-inner {
       border: 1px solid var(--border);
-      border-top: none;
+      padding: 4rem;
+      background: var(--bg-mid);
+      position: relative;
     }
-    .budget-total-label {
-      font-size: 0.68rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text-muted);
+    .donate-inner::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 80px; height: 80px;
+      border-top: 2px solid var(--gold);
+      border-left: 2px solid var(--gold);
+      opacity: 0.25;
     }
-    .budget-total-amount {
+    .donate-inner::after {
+      content: '';
+      position: absolute;
+      bottom: 0; right: 0;
+      width: 80px; height: 80px;
+      border-bottom: 2px solid var(--gold);
+      border-right: 2px solid var(--gold);
+      opacity: 0.25;
+    }
+
+    /* ── GOAL CARDS ── */
+    .goal-row {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin: 2.5rem 0 3rem;
+    }
+    .goal-card {
+      flex: 1;
+      min-width: 150px;
+      border-left: 2px solid var(--gold);
+      padding-left: 1.5rem;
+    }
+    .goal-amount {
       font-family: 'Playfair Display', serif;
       font-size: 2rem;
-      color: var(--gold-light);
-    }
-
-    /* TIERS */
-    .tiers {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 4rem 2.5rem 5rem;
-    }
-    .tiers-header {
-      margin-bottom: 3rem;
-    }
-    .tiers-header h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.6rem, 3vw, 2.2rem);
-      font-weight: 400;
-      color: var(--cream);
-      margin-bottom: 0.8rem;
-    }
-    .tiers-header h2 em {
-      font-style: italic;
-      color: var(--gold-light);
-    }
-    .tiers-header p {
-      max-width: 500px;
-    }
-
-    .tier-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-    }
-
-    .tier {
-      background: var(--dark);
-      display: grid;
-      grid-template-columns: 180px 1fr auto;
-      align-items: center;
-      padding: 1.8rem 2rem;
-      gap: 2rem;
-      transition: background 0.2s;
-      cursor: default;
-    }
-    .tier:hover {
-      background: var(--dark-2);
-    }
-
-    .tier-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.05rem;
-      font-weight: 400;
-      color: var(--cream);
-    }
-    .tier-name small {
-      display: block;
-      font-family: 'Source Sans 3', sans-serif;
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
       color: var(--gold);
-      margin-bottom: 0.3rem;
-      font-weight: 400;
+      display: block;
     }
-
-    .tier-desc {
-      font-size: 0.88rem;
+    .goal-desc {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
       color: var(--text-muted);
-      line-height: 1.55;
-      margin: 0;
+      margin-top: 0.3rem;
     }
 
-    .tier-amount {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.6rem;
-      color: var(--gold);
-      white-space: nowrap;
-      text-align: right;
-    }
-    .tier-amount span {
-      display: block;
-      font-family: 'Source Sans 3', sans-serif;
-      font-size: 0.62rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: rgba(200,154,58,0.5);
-      font-weight: 300;
-      text-align: right;
-      margin-top: 0.2rem;
-    }
-
-    .tier.open .tier-amount {
-      color: var(--gold-light);
-    }
-
-    /* QR / DONATE */
-    .donate {
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 5rem 2rem;
-      text-align: center;
-    }
-    .donate h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.5rem, 3vw, 2rem);
-      font-weight: 400;
-      color: var(--cream);
-      margin-bottom: 0.5rem;
-    }
-    .donate h2 em {
-      font-style: italic;
-      color: var(--gold-light);
-    }
-    .donate-divider {
-      width: 40px;
-      height: 1px;
-      background: var(--gold);
-      opacity: 0.5;
-      margin: 1.5rem auto;
-    }
-    .donate p {
-      max-width: 420px;
-      margin: 0 auto 2.5rem;
-      text-align: center;
-    }
-    .qr-wrap {
-      display: inline-block;
-      background: #fff;
-      padding: 1rem;
-      border-radius: 4px;
-      margin-bottom: 2rem;
-    }
-    .qr-wrap img {
-      display: block;
-      width: 200px;
-      height: 200px;
-      object-fit: contain;
-    }
-    .donate-details {
-      font-size: 0.8rem;
-      letter-spacing: 0.08em;
-      color: var(--text-muted);
-      line-height: 2;
-    }
-    .donate-details strong {
-      color: var(--cream);
-      font-weight: 400;
-    }
-
-    /* REGISTRO / SPONSOR FORM */
-    .reg {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 4rem 2.5rem;
-      border-bottom: 1px solid var(--border);
-    }
-    .reg-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.6rem, 3vw, 2.2rem);
-      font-weight: 400;
-      color: var(--cream);
-      margin-bottom: 0.4rem;
-    }
-    .reg-title em { font-style: italic; color: var(--gold-light); }
-    .reg-form {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.4rem;
-      margin-top: 2rem;
-    }
-    .reg-field { display: flex; flex-direction: column; }
-    .reg-full, .reg-check, .reg-form button { grid-column: 1 / -1; }
-    .reg-field label {
-      font-size: 0.7rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 0.5rem;
-    }
-    .reg-field input,
-    .reg-field select,
-    .reg-field textarea {
-      background: var(--dark-2);
+    /* ── TRANSFER NOTICE ── */
+    .transfer-notice {
+      margin-top: 2.5rem;
+      padding: 1.25rem 1.5rem;
       border: 1px solid var(--border);
-      border-radius: 3px;
-      color: var(--cream);
-      font-family: 'Source Sans 3', sans-serif;
-      font-size: 0.95rem;
-      padding: 0.7rem 0.8rem;
-      width: 100%;
-    }
-    .reg-field input:focus,
-    .reg-field select:focus,
-    .reg-field textarea:focus { outline: none; border-color: var(--gold); }
-    .reg-field textarea { resize: vertical; }
-    .reg-check {
+      background: rgba(168,120,32,0.07);
       display: flex;
       align-items: flex-start;
-      gap: 0.6rem;
+      gap: 1rem;
+    }
+    .notice-icon {
+      font-size: 1.1rem;
+      color: var(--gold);
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+    .notice-text {
       font-size: 0.88rem;
+      line-height: 1.6;
       color: var(--text-muted);
-      line-height: 1.5;
-      cursor: pointer;
+      margin: 0;
     }
-    .reg-check input { margin-top: 0.2rem; accent-color: var(--gold); }
-    .reg-form button {
-      justify-self: start;
-      background: var(--gold);
-      color: var(--dark);
-      border: none;
-      border-radius: 3px;
-      padding: 0.8rem 2.2rem;
-      font-size: 0.75rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: background 0.2s;
+    .notice-text strong {
+      color: var(--text);
+      font-weight: 600;
     }
-    .reg-form button:hover { background: var(--gold-light); }
 
-    /* CONTACT */
-    .contact {
-      text-align: center;
-      padding: 5rem 2rem;
+    /* ── CTA ── */
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 2.5rem;
+      align-items: center;
     }
-    .contact h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.5rem, 3vw, 2rem);
-      font-weight: 400;
-      color: var(--cream);
-      margin-bottom: 0.5rem;
-    }
-    .contact h2 em {
-      font-style: italic;
-      color: var(--gold-light);
-    }
-    .contact-divider {
-      width: 40px;
-      height: 1px;
+
+    .btn-primary {
+      display: inline-block;
       background: var(--gold);
-      opacity: 0.5;
-      margin: 1.5rem auto;
+      color: #fff;
+      padding: 0.9rem 2.5rem;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.2s, transform 0.15s;
     }
-    .contact p {
-      max-width: 420px;
-      margin: 0 auto 2.5rem;
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.08);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .btn-primary:hover::after { opacity: 1; }
+    .btn-primary:hover { transform: translateY(-2px); }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--gold);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(168,120,32,0.35);
+      padding-bottom: 2px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-secondary:hover { color: var(--dark); border-color: var(--dark); }
+
+    /* ── CONTACT ── */
+    .contact {
+      border-top: 1px solid var(--border);
       text-align: center;
+      padding: 4rem 2rem;
     }
     .contact-links {
+      margin: 1.5rem 0;
       display: flex;
       flex-direction: column;
       gap: 0.6rem;
       align-items: center;
     }
-    .contact-links a {
-      font-size: 1rem;
-      color: var(--gold);
-      text-decoration: none;
-      letter-spacing: 0.04em;
-      transition: color 0.2s;
-    }
-    .contact-links a:hover { color: var(--gold-light); }
-    .contact-links span {
-      font-size: 0.88rem;
+    .contact-links a, .contact-links span {
+      font-size: 0.95rem;
       color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.05em;
     }
+    .contact-links a { color: var(--gold); }
+    .contact-links a:hover { color: var(--dark); }
 
     footer {
-      border-top: 1px solid rgba(200,154,58,0.08);
+      border-top: 1px solid var(--border);
       padding: 2rem;
       text-align: center;
-      font-size: 0.68rem;
-      color: rgba(245,237,216,0.2);
+      font-size: 0.72rem;
+      color: var(--text-muted);
       letter-spacing: 0.1em;
     }
-    footer a {
-      color: rgba(200,154,58,0.4);
-      text-decoration: none;
-    }
-    footer a:hover { color: var(--gold); }
 
-    /* ANIMATIONS */
+    /* ── KEYFRAMES ── */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(16px); }
+      from { opacity: 0; transform: translateY(22px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    .hero-content > * {
-      animation: fadeUp 0.7s ease both;
-    }
-    .hero-content .eyebrow { animation-delay: 0.05s; }
-    .hero-content h1       { animation-delay: 0.15s; }
 
-    /* RESPONSIVE */
-    @media (max-width: 680px) {
-      .intro { grid-template-columns: 1fr; gap: 0; padding: 3rem 1.5rem; }
-      .photo-strip { grid-template-columns: 1fr; }
-      .photo-strip-item { aspect-ratio: 3/2; }
-      .budget { padding: 3rem 1.5rem; }
-      .budget-grid { grid-template-columns: 1fr; }
-      .tiers { padding: 3rem 1.5rem 4rem; }
-      .tier {
-        grid-template-columns: 1fr auto;
-        grid-template-rows: auto auto;
-        gap: 0.5rem 1rem;
-        padding: 1.4rem 1.2rem;
+    /* ── MOBILE ── */
+    @media (max-width: 700px) {
+      .gallery {
+        grid-template-columns: 1fr;
       }
-      .tier-name { grid-column: 1; }
-      .tier-amount { grid-column: 2; grid-row: 1 / 3; align-self: center; }
-      .tier-desc { grid-column: 1; font-size: 0.82rem; }
-      nav { padding: 1rem 1.5rem; }
-      .qr-wrap img { width: 160px; height: 160px; }
-      .reg { padding: 3rem 1.5rem; }
-      .reg-form { grid-template-columns: 1fr; }
+      .gallery-item { height: 260px; }
+      .donate-inner { padding: 2rem 1.5rem; }
+      .goal-row { flex-direction: column; gap: 1.5rem; }
     }
   </style>
 </head>
 <body>
 
-  <nav>
-    <a href="index.html" class="nav-home" data-es="← Inicio" data-en="← Home">← Inicio</a>
-    <div class="nav-right">
-      <a href="#donar" class="nav-donate" data-es="Donar" data-en="Donate">Donar</a>
-      <div class="lang-toggle">
-        <button class="active" onclick="setLang('es')" id="btn-es">ES</button>
-        <button onclick="setLang('en')" id="btn-en">EN</button>
-      </div>
-    </div>
-  </nav>
+  <a href="index.html" class="back-link" data-es="← Volver" data-en="← Back">← Volver</a>
 
-  <!-- HERO -->
-  <div class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <span class="eyebrow" data-es="Campaña 2026 · Santiago de Chiquitos" data-en="2026 Campaign · Santiago de Chiquitos">Campaña 2026 · Santiago de Chiquitos</span>
-      <h1 data-es="Apoyá la <em>música misional</em>" data-en="Support <em>misional music</em>">Apoyá la <em>música misional</em></h1>
-    </div>
+  <div class="lang-toggle">
+    <button class="active" onclick="setLang('es')" id="btn-es">ES</button>
+    <button onclick="setLang('en')" id="btn-en">EN</button>
   </div>
 
-  <!-- INTRO -->
-  <div class="intro">
-    <div class="intro-left">
-      <h2 data-es="Una escuela que depende <em>de todos</em>" data-en="A school that depends <em>on all of us</em>">Una escuela que depende <em>de todos</em></h2>
-      <div class="divider"></div>
-      <p data-es="La Escuela de Música Misional forma a más de 70 niños y jóvenes de Santiago de Chiquitos en violín, cello y canto coral. Fundada en 2004, preserva e interpreta el repertorio del Archivo Misional de Chiquitos — uno de los acervos de música barroca más importantes de América Latina." data-en="The Escuela de Música Misional trains over 70 children and youth from Santiago de Chiquitos in violin, cello, and choral singing. Founded in 2004, it preserves and performs the repertoire of the Chiquitos Mission Archive — one of the most important Baroque music collections in Latin America.">
-        La Escuela de Música Misional forma a más de 70 niños y jóvenes de Santiago de Chiquitos en violín, cello y canto coral. Fundada en 2004, preserva e interpreta el repertorio del Archivo Misional de Chiquitos — uno de los acervos de música barroca más importantes de América Latina.
-      </p>
-    </div>
-    <div>
-      <p data-es="Santiago de Chiquitos es un pueblo de 1.500 habitantes en el oriente boliviano, dentro de la Reserva Municipal de Vida Silvestre Tucabaca. Para muchos de estos jóvenes, la escuela es la única alternativa real en una comunidad aislada." data-en="Santiago de Chiquitos is a village of 1,500 people in eastern Bolivia, inside the Tucabaca Municipal Wildlife Reserve. For many of these young people, the school is the only real opportunity in an isolated community.">
-        Santiago de Chiquitos es un pueblo de 1.500 habitantes en el oriente boliviano, dentro de la Reserva Municipal de Vida Silvestre Tucabaca. Para muchos de estos jóvenes, la escuela es la única alternativa real en una comunidad aislada.
-      </p>
-      <p data-es="La escuela depende casi en su totalidad de aportes voluntarios. Sin financiamiento estable, corre el riesgo de cerrar." data-en="The school depends almost entirely on voluntary contributions. Without stable funding, it risks closing.">
-        La escuela depende casi en su totalidad de aportes voluntarios. Sin financiamiento estable, corre el riesgo de cerrar.
-      </p>
-    </div>
-  </div>
-
-  <!-- BUDGET -->
-  <div class="budget">
-    <span class="section-label" data-es="Presupuesto anual 2026" data-en="2026 Annual Budget">Presupuesto anual 2026</span>
-    <div class="budget-grid">
-      <div class="budget-item">
-        <span class="budget-amount">Bs. 150.000</span>
-        <span class="budget-label" data-es="Salarios · 4 profesores de música" data-en="Salaries · 4 music teachers">Salarios · 4 profesores de música</span>
-      </div>
-      <div class="budget-item">
-        <span class="budget-amount">Bs. 5.000</span>
-        <span class="budget-label" data-es="Servicios, mantenimiento e insumos de oficina" data-en="Utilities, maintenance and office supplies">Servicios, mantenimiento e insumos de oficina</span>
-      </div>
-      <div class="budget-item">
-        <span class="budget-amount">Bs. 5.000+</span>
-        <span class="budget-label" data-es="Instrumentos, arcos, cuerdas, partituras e impresión" data-en="Instruments, bows, strings, sheet music and printing">Instrumentos, arcos, cuerdas, partituras e impresión</span>
-      </div>
-    </div>
-    <div class="budget-total">
-      <span class="budget-total-label" data-es="Meta total 2026" data-en="2026 total goal">Meta total 2026</span>
-      <span class="budget-total-amount">Bs. 160.000</span>
-    </div>
-  </div>
-
-  <!-- TIERS -->
-  <div class="tiers">
-    <div class="tiers-header">
-      <span class="section-label" data-es="Apadrinamiento" data-en="Sponsorship">Apadrinamiento</span>
-      <h2 data-es="Elegí tu <em>nivel de apoyo</em>" data-en="Choose your <em>level of support</em>">Elegí tu <em>nivel de apoyo</em></h2>
-      <p data-es="Cada aporte va directamente al funcionamiento de la escuela. No hay intermediarios." data-en="Every contribution goes directly to the school's operations. No intermediaries.">Cada aporte va directamente al funcionamiento de la escuela. No hay intermediarios.</p>
-    </div>
-
-    <div class="tier-list">
-
-      <div class="tier">
-        <div class="tier-name">
-          <small data-es="Nivel 1" data-en="Level 1">Nivel 1</small>
-          Amigo del Coro
-        </div>
-        <p class="tier-desc" data-es="Cuerdas y materiales básicos para un estudiante durante el año." data-en="Strings and basic materials for one student for the year.">Cuerdas y materiales básicos para un estudiante durante el año.</p>
-        <div class="tier-amount">Bs. 1–99 <span data-es="por año" data-en="per year">por año</span></div>
-      </div>
-
-      <div class="tier">
-        <div class="tier-name">
-          <small data-es="Nivel 2" data-en="Level 2">Nivel 2</small>
-          Padrino Chiquitano
-        </div>
-        <p class="tier-desc" data-es="Cubre un mes de clases para un niño o joven de la escuela." data-en="Covers one month of classes for a child or youth at the school.">Cubre un mes de clases para un niño o joven de la escuela.</p>
-        <div class="tier-amount">Bs. 100–199 <span data-es="por año" data-en="per year">por año</span></div>
-      </div>
-
-      <div class="tier">
-        <div class="tier-name">
-          <small data-es="Nivel 3" data-en="Level 3">Nivel 3</small>
-          Músico del Pueblo
-        </div>
-        <p class="tier-desc" data-es="Sostiene tres meses de formación musical para un estudiante." data-en="Sustains three months of musical training for one student.">Sostiene tres meses de formación musical para un estudiante.</p>
-        <div class="tier-amount">Bs. 200–349 <span data-es="por año" data-en="per year">por año</span></div>
-      </div>
-
-      <div class="tier">
-        <div class="tier-name">
-          <small data-es="Nivel 4" data-en="Level 4">Nivel 4</small>
-          Guardián de la Tradición
-        </div>
-        <p class="tier-desc" data-es="Cubre medio año de formación completa para un niño o joven." data-en="Covers half a year of full training for one child or youth.">Cubre medio año de formación completa para un niño o joven.</p>
-        <div class="tier-amount">Bs. 350–599 <span data-es="por año" data-en="per year">por año</span></div>
-      </div>
-
-      <div class="tier">
-        <div class="tier-name">
-          <small data-es="Nivel 5" data-en="Level 5">Nivel 5</small>
-          Custodio Misional
-        </div>
-        <p class="tier-desc" data-es="Un año completo de formación musical para un estudiante de Santiago de Chiquitos." data-en="A full year of musical training for one student from Santiago de Chiquitos.">Un año completo de formación musical para un estudiante de Santiago de Chiquitos.</p>
-        <div class="tier-amount">Bs. 600–999 <span data-es="por año" data-en="per year">por año</span></div>
-      </div>
-
-      <div class="tier open">
-        <div class="tier-name">
-          <small data-es="Nivel 6" data-en="Level 6">Nivel 6</small>
-          Fundador
-        </div>
-        <p class="tier-desc" data-es="Para quienes quieren ir más allá. Cualquier monto por encima de Bs. 1.000 es bienvenido y transforma directamente la escuela." data-en="For those who want to go further. Any amount above Bs. 1,000 is welcome and directly transforms the school.">Para quienes quieren ir más allá. Cualquier monto por encima de Bs. 1.000 es bienvenido y transforma directamente la escuela.</p>
-        <div class="tier-amount">Bs. 1.000+ <span data-es="por año" data-en="per year">por año</span></div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- GROUP PHOTO -->
-  <div class="group-photo">
-    <img src="WhatsApp%20Image%202026-05-30%20at%205.29.19%20PM.jpeg" alt="Coro y orquesta de la Escuela de Música Misional Santiago de Chiquitos" />
-    <span class="credit">Foto: Red Uno</span>
-  </div>
-
-  <!-- QR DONATE -->
-  <div class="donate" id="donar">
-    <span class="eyebrow" data-es="Cómo donar" data-en="How to donate">Cómo donar</span>
-    <h2 data-es="Transferencia <em>bancaria</em>" data-en="Bank <em>transfer</em>">Transferencia <em>bancaria</em></h2>
-    <div class="donate-divider"></div>
-    <p data-es="Escanea el código QR para realizar tu transferencia." data-en="Scan the QR code to make your transfer.">Escanea el código QR para realizar tu transferencia.</p>
-    <div class="qr-wrap">
-      <img src="cropmusi.jpeg" alt="QR Banco Unión" />
-    </div>
-    <div class="donate-details">
-      <div><strong data-es="Cuenta" data-en="Account">Cuenta</strong> &nbsp;10000056770148</div>
-      <div><strong>Banco Unión S.A.</strong></div>
-    </div>
-  </div>
-
-  <!-- REGISTRO / SPONSOR FORM -->
-  <div class="reg">
-    <span class="section-label" data-es="Registro" data-en="Registration">Registro</span>
-    <h2 class="reg-title" data-es="Registrá tu <em>apadrinamiento</em>" data-en="Register your <em>sponsorship</em>">Registrá tu <em>apadrinamiento</em></h2>
+  <!-- HEADER -->
+  <div class="page-header">
+    <p class="section-label" data-es="Campaña 2026" data-en="2026 Campaign">Campaña 2026</p>
+    <h1 data-es="Apadriná un <em>músico del futuro</em>" data-en="Sponsor a <em>future musician</em>">Apadriná un <em>músico del futuro</em></h1>
     <div class="divider"></div>
-    <p data-es="Dejanos tus datos después de tu transferencia y te contactamos para confirmar el aporte." data-en="Leave your details after your transfer and we'll contact you to confirm your contribution.">Dejanos tus datos después de tu transferencia y te contactamos para confirmar el aporte.</p>
+    <p style="max-width:540px; margin: 0 auto;" data-es="Con Bs. 1.000 al año cubrís un año completo de formación musical para un niño o joven de Santiago de Chiquitos — menos de Bs. 3 por día." data-en="With Bs. 1,000 per year you cover a full year of musical training for a child or youth in Santiago de Chiquitos — less than Bs. 3 per day.">
+      Con Bs. 1.000 al año cubrís un año completo de formación musical para un niño o joven de Santiago de Chiquitos — menos de Bs. 3 por día.
+    </p>
+  </div>
 
-    <form class="reg-form" action="https://api.web3forms.com/submit" method="POST">
-      <input type="hidden" name="access_key" value="fd44a6fc-0468-4bac-bbf8-d886c21b4921">
-      <input type="hidden" name="subject" value="Nuevo registro de apadrinamiento — EMUSACHI">
-      <!-- honeypot anti-spam: leave hidden/empty -->
-      <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off">
+  <!-- PHOTO GALLERY -->
+  <div class="gallery">
+    <div class="gallery-item">
+      <img src="Image Apr 30, 2026, 09_19_22 PM.png" alt="Escuela de Música Misional" />
+    </div>
+    <div class="gallery-item">
+      <img src="Image Apr 30, 2026, 09_34_11 PM.png" alt="Escuela de Música Misional" />
+    </div>
+    <div class="gallery-item">
+      <img src="Apr 30, 2026, 09_35_58 PM.png" alt="Escuela de Música Misional" />
+    </div>
+  </div>
 
-      <div class="reg-field reg-full">
-        <label for="reg-name" data-es="Nombre (como desea ser listado en publicaciones)" data-en="Name (as you'd like to appear in publications)">Nombre (como desea ser listado en publicaciones)</label>
-        <input id="reg-name" name="name" type="text" required />
-      </div>
-      <div class="reg-field">
-        <label for="reg-email" data-es="Correo electrónico" data-en="Email">Correo electrónico</label>
-        <input id="reg-email" name="email" type="email" required />
-      </div>
-      <div class="reg-field">
-        <label for="reg-phone" data-es="WhatsApp / teléfono (opcional)" data-en="WhatsApp / phone (optional)">WhatsApp / teléfono (opcional)</label>
-        <input id="reg-phone" name="telefono" type="tel" />
-      </div>
-      <div class="reg-field reg-full">
-        <label for="reg-amount" data-es="Monto (Bs.)" data-en="Amount (Bs.)">Monto (Bs.)</label>
-        <input id="reg-amount" name="monto" type="number" min="0" required />
-      </div>
-      <div class="reg-field reg-full">
-        <label for="reg-msg" data-es="Mensaje (opcional)" data-en="Message (optional)">Mensaje (opcional)</label>
-        <textarea id="reg-msg" name="mensaje" rows="3"></textarea>
+  <!-- DONATE BOX -->
+  <div class="donate-wrap" id="donar">
+    <div class="donate-inner">
+      <p class="section-label" data-es="Tu aporte" data-en="Your contribution">Tu aporte</p>
+      <h2 data-es="¿Cómo <em>apadrinar</em>?" data-en="How to <em>sponsor</em>?">¿Cómo <em>apadrinar</em>?</h2>
+      <div class="divider" style="margin-left:0;"></div>
+
+      <div class="goal-row">
+        <div class="goal-card">
+          <span class="goal-amount">Bs. 155.000</span>
+          <span class="goal-desc" data-es="Meta anual 2026" data-en="2026 annual goal">Meta anual 2026</span>
+        </div>
+        <div class="goal-card">
+          <span class="goal-amount">Bs. 1.000</span>
+          <span class="goal-desc" data-es="Aporte por padrino/a · año" data-en="Per sponsor · year">Aporte por padrino/a · año</span>
+        </div>
+        <div class="goal-card">
+          <span class="goal-amount">155</span>
+          <span class="goal-desc" data-es="Padrinos necesarios" data-en="Sponsors needed">Padrinos necesarios</span>
+        </div>
       </div>
 
-      <label class="reg-check">
-        <input type="checkbox" name="anonimo" value="Sí, prefiere no aparecer" />
-        <span data-es="Prefiero no aparecer en listas públicas de donantes ni en publicaciones." data-en="I prefer not to appear in public donor lists or publications.">Prefiero no aparecer en listas públicas de donantes ni en publicaciones.</span>
-      </label>
+      <!-- International transfer notice -->
+      <div class="transfer-notice">
+        <span class="notice-icon">⏳</span>
+        <p class="notice-text" data-es="<strong>Transferencia internacional:</strong> Próximamente habilitaremos el pago en línea para donantes internacionales. Por ahora, contactanos directamente para coordinar tu aporte." data-en="<strong>International transfer:</strong> Online payment for international donors is coming soon. For now, contact us directly to arrange your contribution.">
+          <strong>Transferencia internacional:</strong> Próximamente habilitaremos el pago en línea para donantes internacionales. Por ahora, contactanos directamente para coordinar tu aporte.
+        </p>
+      </div>
 
-      <button type="submit" data-es="Enviar" data-en="Submit">Enviar</button>
-    </form>
+      <div class="cta-row">
+        <a href="tel:+59178945211" class="btn-primary" data-es="Llamanos" data-en="Call us">Llamanos</a>
+        <a href="https://www.facebook.com/emusachi" target="_blank" class="btn-secondary" data-es="Escribinos en Facebook ↗" data-en="Message us on Facebook ↗">Escribinos en Facebook ↗</a>
+      </div>
+    </div>
   </div>
 
   <!-- CONTACT -->
   <div class="contact">
-    <span class="eyebrow" data-es="Contacto" data-en="Contact">Contacto</span>
-    <div class="contact-divider"></div>
+    <p class="section-label" data-es="Contacto" data-en="Contact">Contacto</p>
     <div class="contact-links">
-      <a href="https://wa.me/59178945211" target="_blank">WhatsApp · +591 78945211</a>
-      <a href="https://www.facebook.com/escuelamusicasantiagochiquitos" target="_blank">facebook.com/escuelamusicasantiagochiquitos</a>
-      <a href="mailto:escuelamusicasantiagochiquitos@gmail.com">escuelamusicasantiagochiquitos@gmail.com</a>
+      <a href="tel:+59178945211">+591 78945211</a>
+      <a href="https://www.facebook.com/emusachi" target="_blank">facebook.com/emusachi</a>
       <span>Santiago de Chiquitos, Bolivia</span>
     </div>
   </div>
 
   <footer>
-    <p>© 2026 Escuela de Música Misional Santiago de Chiquitos &nbsp;·&nbsp; <a href="index.html" data-es="Volver al inicio" data-en="Back to home">Volver al inicio</a></p>
+    <p>© 2026 Escuela de Música Misional Santiago de Chiquitos</p>
   </footer>
 
   <script>
@@ -822,6 +440,25 @@
         if (text) el.innerHTML = text;
       });
     }
+
+    const revealTargets = [
+      ...document.querySelectorAll('.gallery-item'),
+      document.querySelector('.donate-wrap'),
+    ].filter(Boolean);
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const siblings = [...entry.target.parentElement.children];
+          const idx = siblings.indexOf(entry.target);
+          entry.target.style.transitionDelay = `${idx * 0.1}s`;
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    revealTargets.forEach(el => observer.observe(el));
   </script>
 
 </body>
