@@ -3,29 +3,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Escuela de Música Misional — Santiago de Chiquitos</title>
+  <title>Apadriná un músico — Escuela de Música Misional</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --gold: #C89A3A;
-      --gold-light: #E8C96A;
-      --dark: #1A1208;
-      --cream: #F5EDD8;
-      --text-muted: rgba(245,237,216,0.70);
+      --gold: #9A6E18;
+      --gold-light: #C89A3A;
+      --dark: #1E1208;
+      --bg: #EFE7D4;
+      --bg-mid: #E4D9C2;
+      --bg-card: #F5EFE2;
+      --text: #1E1208;
+      --text-muted: #4A3515;
+      --border: rgba(154,110,24,0.25);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--dark);
-      color: var(--cream);
+      background: var(--bg);
+      color: var(--text);
       font-family: 'Source Sans 3', sans-serif;
-      font-weight: 300;
+      font-weight: 400;
       overflow-x: hidden;
+      font-size: 1rem;
+      line-height: 1.7;
     }
 
-    /* ── REDUCED MOTION ── */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
     }
@@ -33,624 +38,514 @@
     /* ── LANG TOGGLE ── */
     .lang-toggle {
       position: fixed;
-      top: 1.2rem;
-      right: 1.5rem;
+      top: 1rem;
+      right: 1.2rem;
       z-index: 100;
       display: flex;
-      border: 1px solid rgba(200,154,58,0.4);
-      border-radius: 4px;
+      border: 1px solid var(--border);
+      border-radius: 3px;
       overflow: hidden;
+      background: var(--bg-card);
     }
     .lang-toggle button {
       background: transparent;
       border: none;
       color: var(--gold);
-      padding: 0.35rem 0.75rem;
+      padding: 0.3rem 0.65rem;
       font-family: 'Source Sans 3', sans-serif;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       letter-spacing: 0.1em;
       cursor: pointer;
       transition: background 0.2s;
     }
-    .lang-toggle button.active {
-      background: var(--gold);
-      color: var(--dark);
-    }
+    .lang-toggle button.active { background: var(--gold); color: #fff; }
 
-    /* ── HERO ── */
-    .hero {
-      position: relative;
-      height: 100vh;
-      min-height: 600px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-end;
-      padding-bottom: 6rem;
-      text-align: center;
-      overflow: hidden;
-    }
-
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background-image: url('7f0bc874-88ad-46ab-b418-c8e24759057f.png');
-      background-size: cover;
-      background-position: center 20%;
-      filter: brightness(0.45);
-      will-change: transform;
-    }
-
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(26,18,8,0.97) 0%, rgba(26,18,8,0.3) 55%, transparent 100%);
-    }
-
-    /* Logo top-center in hero */
-    .hero-logo {
-      position: absolute;
-      top: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 10;
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      border: 2px solid rgba(200,154,58,0.5);
-      overflow: hidden;
-      opacity: 0;
-      animation: fadeDown 0.8s 0.1s ease forwards;
-    }
-    .hero-logo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 780px;
-      padding: 0 2rem;
-    }
-
-    .hero-eyebrow {
+    /* ── BACK LINK ── */
+    .back-link {
+      position: fixed;
+      top: 1rem;
+      left: 1.2rem;
+      z-index: 100;
       font-size: 0.72rem;
-      letter-spacing: 0.35em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--gold);
-      margin-bottom: 1.2rem;
-      opacity: 0;
-      animation: fadeUp 0.7s 0.3s ease forwards;
+      text-decoration: none;
     }
+    .back-link:hover { color: var(--dark); }
 
-    .hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.4rem, 6vw, 5rem);
-      font-weight: 400;
-      line-height: 1.1;
-      color: var(--cream);
-      margin-bottom: 1.2rem;
-      opacity: 0;
-      animation: fadeUp 0.7s 0.45s ease forwards;
-    }
-
-    .hero h1 em {
-      font-style: italic;
-      color: var(--gold-light);
-    }
-
-    .hero-desc {
-      font-size: 1.05rem;
-      line-height: 1.75;
-      color: var(--text-muted);
-      max-width: 540px;
-      margin: 0 auto 2.5rem;
-      opacity: 0;
-      animation: fadeUp 0.7s 0.6s ease forwards;
-    }
-
-    .hero-cta-wrap {
-      opacity: 0;
-      animation: fadeUp 0.7s 0.75s ease forwards;
-    }
-
-    /* ── SCROLL INDICATOR ── */
-    .scroll-indicator {
-      position: absolute;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 5;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.4rem;
-      opacity: 0;
-      animation: fadeIn 1s 1.2s ease forwards;
-    }
-    .scroll-indicator span {
-      font-size: 0.62rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: rgba(200,154,58,0.5);
-    }
-    .scroll-line {
-      width: 1px;
-      height: 40px;
-      background: linear-gradient(to bottom, var(--gold), transparent);
-      animation: scrollPulse 2s 1.5s ease-in-out infinite;
-    }
-
-    /* ── STATS ── */
-    .stats {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      border-bottom: 1px solid rgba(200,154,58,0.15);
-    }
-    .stat {
-      flex: 1;
-      min-width: 150px;
-      max-width: 220px;
-      padding: 2.2rem 1rem;
+    /* ── PAGE HEADER ── */
+    .page-header {
+      padding: 5.5rem 2rem 2.5rem;
       text-align: center;
-      border-right: 1px solid rgba(200,154,58,0.12);
+      border-bottom: 1px solid var(--border);
+      opacity: 0;
+      animation: fadeUp 0.6s 0.15s ease forwards;
+    }
+
+    .eyebrow {
+      font-size: 0.65rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.7rem;
+      display: block;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4.5vw, 3.2rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 0.8rem;
+    }
+    h1 em { font-style: italic; color: var(--gold); }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.3rem, 2.8vw, 1.9rem);
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+    h2 em { font-style: italic; color: var(--gold); }
+
+    .rule {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.5;
+      margin: 1rem auto;
+    }
+
+    .lead {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* ── GALLERY ── */
+    .gallery {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 4px;
+      margin: 4px;
+    }
+    .gallery-item {
+      overflow: hidden;
+      height: 300px;
       opacity: 0;
       transform: translateY(16px);
       transition: opacity 0.6s ease, transform 0.6s ease;
     }
-    .stat.visible { opacity: 1; transform: translateY(0); }
-    .stat:last-child { border-right: none; }
-    .stat-number {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.6rem;
-      color: var(--gold);
-      display: block;
-      line-height: 1;
-      margin-bottom: 0.4rem;
-    }
-    .stat-label {
-      font-size: 0.72rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: rgba(245,237,216,0.45);
-    }
-
-    /* ── PHOTO GRID ── */
-    .photo-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      grid-template-rows: 340px 340px;
-      gap: 6px;
-      margin: 6px;
-    }
-
-    .photo-grid .p1 { grid-column: 1 / 3; grid-row: 1; }
-    .photo-grid .p2 { grid-column: 3;     grid-row: 1; }
-    .photo-grid .p3 { grid-column: 1;     grid-row: 2; }
-    .photo-grid .p4 { grid-column: 2 / 4; grid-row: 2; }
-
-    .grid-photo {
-      overflow: hidden;
-      position: relative;
-      opacity: 0;
-      transform: scale(0.97);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .grid-photo.visible { opacity: 1; transform: scale(1); }
-
-    .grid-photo img {
-      width: 100%;
-      height: 100%;
+    .gallery-item.visible { opacity: 1; transform: translateY(0); }
+    .gallery-item img {
+      width: 100%; height: 100%;
       object-fit: cover;
       display: block;
-      transition: transform 0.7s ease;
+      transition: transform 0.6s ease;
     }
-    .grid-photo:hover img { transform: scale(1.05); }
+    .gallery-item:hover img { transform: scale(1.04); }
 
-    /* ── ABOUT ── */
-    .about {
-      max-width: 820px;
-      margin: 0 auto;
-      padding: 7rem 2rem;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      align-items: start;
-    }
-
-    .about-col {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .about-col.visible { opacity: 1; transform: translateY(0); }
-    .about-col:last-child { transition-delay: 0.15s; }
-
-    .section-label {
-      font-size: 0.68rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 1rem;
-    }
-
-    h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-      font-weight: 400;
-      line-height: 1.2;
-      color: var(--cream);
-      margin-bottom: 1.5rem;
-    }
-    h2 em { font-style: italic; color: var(--gold-light); }
-
-    .divider {
-      width: 48px;
-      height: 1px;
-      background: var(--gold);
-      opacity: 0.5;
-      margin: 1.5rem 0;
-    }
-
-    p {
-      font-size: 1rem;
-      line-height: 1.8;
-      color: var(--text-muted);
-      margin-bottom: 1.1rem;
-    }
-
-    /* ── FULL WIDTH PHOTO ── */
-    .full-photo {
-      height: 480px;
-      overflow: hidden;
+    /* ── GROUP PHOTO ── */
+    .group-photo {
       position: relative;
+      height: 360px;
+      overflow: hidden;
     }
-    .full-photo img {
-      width: 100%;
-      height: 120%;
+    .group-photo img {
+      width: 100%; height: 100%;
       object-fit: cover;
       object-position: center 30%;
       display: block;
-      will-change: transform;
     }
-    .full-photo-caption {
+    .group-photo .credit {
       position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 2rem;
-      background: linear-gradient(to top, rgba(26,18,8,0.85), transparent);
-      font-size: 0.8rem;
-      letter-spacing: 0.15em;
+      bottom: 0.6rem;
+      right: 0.9rem;
+      font-size: 0.64rem;
+      letter-spacing: 0.1em;
+      color: rgba(245,237,216,0.5);
       text-transform: uppercase;
-      color: var(--gold);
     }
 
-    /* ── SINGLE DONATE SECTION ── */
-    .donate {
-      max-width: 820px;
+    /* ── MAIN CONTENT WRAPPER ── */
+    .content {
+      max-width: 680px;
       margin: 0 auto;
-      padding: 7rem 2rem;
+      padding: 3rem 2rem 1rem;
+    }
+
+    /* ── QR + DETAILS ── */
+    .transfer-block {
       opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
     }
-    .donate.visible { opacity: 1; transform: translateY(0); }
+    .transfer-block.visible { opacity: 1; transform: translateY(0); }
 
-    .donate-inner {
-      border: 1px solid rgba(200,154,58,0.25);
-      padding: 4rem;
-      background: linear-gradient(135deg, rgba(200,154,58,0.06), transparent);
-      position: relative;
-      overflow: hidden;
-    }
+    .transfer-block .eyebrow { text-align: center; }
+    .transfer-block h2 { text-align: center; }
+    .transfer-block .rule { margin: 0.8rem auto 1rem; }
 
-    /* Subtle gold corner accent */
-    .donate-inner::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 80px; height: 80px;
-      border-top: 2px solid var(--gold);
-      border-left: 2px solid var(--gold);
-      opacity: 0.3;
-    }
-    .donate-inner::after {
-      content: '';
-      position: absolute;
-      bottom: 0; right: 0;
-      width: 80px; height: 80px;
-      border-bottom: 2px solid var(--gold);
-      border-right: 2px solid var(--gold);
-      opacity: 0.3;
+    .transfer-desc {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
     }
 
-    .goal-row {
+    .qr-and-details {
       display: flex;
       gap: 2rem;
+      align-items: flex-start;
+      justify-content: center;
       flex-wrap: wrap;
-      margin: 2.5rem 0 3rem;
+      margin-bottom: 1.5rem;
     }
-    .goal-card {
-      flex: 1;
-      min-width: 160px;
-      border-left: 2px solid var(--gold);
-      padding-left: 1.5rem;
+
+    .qr-wrap {
+      background: #fff;
+      border: 1px solid var(--border);
+      padding: 0.9rem;
+      flex-shrink: 0;
     }
-    .goal-amount {
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem;
-      color: var(--gold);
+    .qr-wrap img {
       display: block;
-    }
-    .goal-desc {
-      font-size: 0.72rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: rgba(245,237,216,0.45);
-      margin-top: 0.3rem;
+      width: 160px;
+      height: 160px;
+      object-fit: contain;
     }
 
-    .donate-actions {
+    .bank-details {
       display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-top: 2rem;
-      align-items: center;
-    }
-
-    .btn-primary {
-      display: inline-block;
-      background: var(--gold);
-      color: var(--dark);
-      padding: 0.9rem 2.5rem;
-      font-family: 'Source Sans 3', sans-serif;
-      font-size: 0.82rem;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      text-decoration: none;
-      cursor: pointer;
-      border: none;
-      transition: background 0.2s, transform 0.15s;
-      position: relative;
-      overflow: hidden;
-    }
-    .btn-primary::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(255,255,255,0.12);
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-    .btn-primary:hover::after { opacity: 1; }
-    .btn-primary:hover { transform: translateY(-2px); }
-
-    .btn-secondary {
-      display: inline-flex;
-      align-items: center;
+      flex-direction: column;
       gap: 0.5rem;
-      color: var(--gold);
-      font-size: 0.82rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      text-decoration: none;
-      border-bottom: 1px solid rgba(200,154,58,0.3);
-      padding-bottom: 2px;
-      transition: border-color 0.2s, color 0.2s;
+      font-size: 0.92rem;
+      color: var(--text);
+      padding-top: 0.25rem;
     }
-    .btn-secondary:hover { color: var(--gold-light); border-color: var(--gold-light); }
+    .bank-details .row { display: flex; gap: 0.5rem; align-items: baseline; }
+    .bank-details strong {
+      font-weight: 600;
+      color: var(--dark);
+      min-width: 64px;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .bank-details .val { color: var(--text-muted); }
+
+    /* ── INTERNATIONAL NOTICE ── */
+    .intl-notice {
+      display: flex;
+      gap: 0.7rem;
+      align-items: flex-start;
+      background: var(--bg-mid);
+      border: 1px solid var(--border);
+      padding: 0.9rem 1.1rem;
+      margin-bottom: 2.5rem;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+    .intl-notice strong { color: var(--text); }
+    .intl-notice .icon { color: var(--gold); flex-shrink: 0; }
+
+    /* ── DIVIDING RULE ── */
+    .section-rule {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0 0 2.5rem;
+    }
+
+    /* ── FORM ── */
+    .form-block {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      transition-delay: 0.1s;
+    }
+    .form-block.visible { opacity: 1; transform: translateY(0); }
+
+    .form-block .eyebrow { text-align: left; }
+    .form-block h2 { text-align: left; }
+    .form-block .rule { margin: 0.8rem 0 1rem; }
+
+    .form-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 400;
+      padding: 0.6rem 0.85rem;
+      outline: none;
+      border-radius: 0;
+      appearance: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus { border-color: var(--gold); }
+    .form-group textarea { resize: vertical; min-height: 80px; }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-check {
+      display: flex;
+      gap: 0.65rem;
+      align-items: flex-start;
+      margin-bottom: 1.5rem;
+    }
+    .form-check input[type="checkbox"] {
+      width: 15px; height: 15px;
+      flex-shrink: 0;
+      margin-top: 3px;
+      accent-color: var(--gold);
+      cursor: pointer;
+    }
+    .form-check label {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      line-height: 1.5;
+    }
+
+    .btn-submit {
+      display: block;
+      width: 100%;
+      background: var(--gold);
+      color: #fff;
+      padding: 0.85rem 2rem;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: filter 0.2s, transform 0.15s;
+    }
+    .btn-submit:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 2rem 1rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      color: var(--gold);
+    }
 
     /* ── CONTACT ── */
     .contact {
-      border-top: 1px solid rgba(200,154,58,0.15);
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 2rem;
       text-align: center;
-      padding: 5rem 2rem;
+      margin-top: 1rem;
     }
+    .contact .eyebrow { margin-bottom: 0.8rem; }
     .contact-links {
-      margin: 2rem 0;
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
+      gap: 0.4rem;
       align-items: center;
     }
     .contact-links a, .contact-links span {
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       color: var(--text-muted);
       text-decoration: none;
-      letter-spacing: 0.05em;
     }
     .contact-links a { color: var(--gold); }
-    .contact-links a:hover { color: var(--gold-light); }
+    .contact-links a:hover { color: var(--dark); }
 
     footer {
-      border-top: 1px solid rgba(200,154,58,0.1);
-      padding: 2rem;
+      border-top: 1px solid var(--border);
+      padding: 1.5rem 2rem;
       text-align: center;
-      font-size: 0.72rem;
-      color: rgba(245,237,216,0.25);
+      font-size: 0.68rem;
+      color: var(--text-muted);
       letter-spacing: 0.1em;
     }
 
-    /* ── KEYFRAMES ── */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(22px); }
+      from { opacity: 0; transform: translateY(18px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    @keyframes fadeDown {
-      from { opacity: 0; transform: translateX(-50%) translateY(-12px); }
-      to   { opacity: 1; transform: translateX(-50%) translateY(0); }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to   { opacity: 1; }
-    }
-    @keyframes scrollPulse {
-      0%, 100% { opacity: 0.4; transform: scaleY(1); }
-      50%       { opacity: 1;   transform: scaleY(1.15); }
-    }
 
-    /* ── MOBILE ── */
-    @media (max-width: 700px) {
-      .photo-grid {
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 220px 220px 220px;
-      }
-      .photo-grid .p1 { grid-column: 1 / 3; grid-row: 1; }
-      .photo-grid .p2 { grid-column: 1;     grid-row: 2; }
-      .photo-grid .p3 { grid-column: 2;     grid-row: 2; }
-      .photo-grid .p4 { grid-column: 1 / 3; grid-row: 3; }
-      .about { grid-template-columns: 1fr; gap: 0; padding: 4rem 1.5rem; }
-      .donate-inner { padding: 2rem 1.5rem; }
-      .stats { flex-direction: column; }
-      .stat { border-right: none; border-bottom: 1px solid rgba(200,154,58,0.12); max-width: 100%; }
-      .stat:last-child { border-bottom: none; }
-      .full-photo { height: 300px; }
-      .hero-logo { width: 70px; height: 70px; }
+    @media (max-width: 640px) {
+      .gallery { grid-template-columns: 1fr; }
+      .gallery-item { height: 240px; }
+      .group-photo { height: 260px; }
+      .qr-and-details { flex-direction: column; align-items: center; }
+      .form-row { grid-template-columns: 1fr; }
+      .content { padding: 2rem 1.25rem 1rem; }
     }
   </style>
 </head>
 <body>
+
+  <a href="index.html" class="back-link" data-es="← Volver" data-en="← Back">← Volver</a>
 
   <div class="lang-toggle">
     <button class="active" onclick="setLang('es')" id="btn-es">ES</button>
     <button onclick="setLang('en')" id="btn-en">EN</button>
   </div>
 
-  <!-- HERO -->
-  <div class="hero">
-    <div class="hero-bg" id="heroBg"></div>
-    <div class="hero-overlay"></div>
+  <!-- HEADER -->
+  <div class="page-header">
+    <span class="eyebrow" data-es="Campaña 2026" data-en="2026 Campaign">Campaña 2026</span>
+    <h1 data-es="Apadriná un <em>músico del futuro</em>" data-en="Sponsor a <em>future musician</em>">Apadriná un <em>músico del futuro</em></h1>
+    <div class="rule"></div>
+    <p class="lead" data-es="Con Bs. 1.000 al año cubrís un año completo de formación musical para un niño o joven de Santiago de Chiquitos." data-en="With Bs. 1,000 per year you cover a full year of musical training for a child or youth in Santiago de Chiquitos.">
+      Con Bs. 1.000 al año cubrís un año completo de formación musical para un niño o joven de Santiago de Chiquitos.
+    </p>
+  </div>
 
-    <!-- Logo -->
-    <div class="hero-logo">
-      <img src="logo.jpeg" alt="Escuela de Música Misional" />
-    </div>
+  <!-- GALLERY -->
+  <div class="gallery">
+    <div class="gallery-item"><img src="Image Apr 30, 2026, 09_19_22 PM.png" alt="Escuela de Música Misional" /></div>
+    <div class="gallery-item"><img src="Image Apr 30, 2026, 09_34_11 PM.png" alt="Escuela de Música Misional" /></div>
+    <div class="gallery-item"><img src="Apr 30, 2026, 09_35_58 PM.png" alt="Escuela de Música Misional" /></div>
+  </div>
 
-    <div class="hero-content">
-      <p class="hero-eyebrow" data-es="Santiago de Chiquitos · Bolivia" data-en="Santiago de Chiquitos · Bolivia">Santiago de Chiquitos · Bolivia</p>
-      <h1><span data-es="Escuela de Música <em>Misional</em>" data-en="School of <em>Misional</em> Music">Escuela de Música <em>Misional</em></span></h1>
-      <p class="hero-desc" data-es="Formamos niños y jóvenes en música y preservamos la tradición misional chiquitana — una herencia viva desde la época jesuítica." data-en="We train children and youth in music and preserve the Chiquitano misional tradition — a living heritage from the Jesuit era.">
-        Formamos niños y jóvenes en música y preservamos la tradición misional chiquitana — una herencia viva desde la época jesuítica.
+  <!-- GROUP PHOTO -->
+  <div class="group-photo">
+    <img src="WhatsApp Image 2026-05-30 at 5.29.19 PM.jpeg" alt="Coro y orquesta misional" />
+    <span class="credit">Foto: Red Uno</span>
+  </div>
+
+  <!-- MAIN CONTENT: QR + FORM close together -->
+  <div class="content" id="donar">
+
+    <!-- QR / TRANSFER -->
+    <div class="transfer-block">
+      <span class="eyebrow" data-es="Cómo donar" data-en="How to donate">Cómo donar</span>
+      <h2 data-es="Transferencia <em>bancaria</em>" data-en="Bank <em>transfer</em>">Transferencia <em>bancaria</em></h2>
+      <div class="rule"></div>
+      <p class="transfer-desc" data-es="Escaneá el código QR para realizar tu transferencia." data-en="Scan the QR code to complete your transfer.">
+        Escaneá el código QR para realizar tu transferencia.
       </p>
-      <div class="hero-cta-wrap">
-        <a href="#donar" class="btn-primary" data-es="Apadriná un músico" data-en="Sponsor a musician">Apadriná un músico</a>
+
+      <div class="qr-and-details">
+        <div class="qr-wrap">
+          <img src="cropmusi.jpeg" alt="QR Banco Unión" />
+        </div>
+        <div class="bank-details">
+          <div class="row"><strong data-es="Cuenta" data-en="Account">Cuenta</strong><span class="val">10000056770148</span></div>
+          <div class="row"><strong data-es="Titular" data-en="Name">Titular</strong><span class="val">MaryKathryn</span></div>
+          <div class="row"><strong>Banco</strong><span class="val">Banco Unión S.A.</span></div>
+        </div>
+      </div>
+
+      <div class="intl-notice">
+        <span class="icon">⏳</span>
+        <p data-es="<strong>Transferencia internacional:</strong> Próximamente habilitaremos el pago en línea para donantes internacionales." data-en="<strong>International transfer:</strong> Online payment for international donors is coming soon.">
+          <strong>Transferencia internacional:</strong> Próximamente habilitaremos el pago en línea para donantes internacionales.
+        </p>
       </div>
     </div>
 
-    <div class="scroll-indicator">
-      <div class="scroll-line"></div>
-      <span data-es="Conocé más" data-en="Learn more">Conocé más</span>
-    </div>
-  </div>
+    <hr class="section-rule" />
 
-  <!-- STATS -->
-  <div class="stats">
-    <div class="stat">
-      <span class="stat-number">70+</span>
-      <span class="stat-label" data-es="Niños y jóvenes" data-en="Children & youth">Niños y jóvenes</span>
-    </div>
-    <div class="stat">
-      <span class="stat-number">20+</span>
-      <span class="stat-label" data-es="Años de historia" data-en="Years of history">Años de historia</span>
-    </div>
-    <div class="stat">
-      <span class="stat-number">1.500</span>
-      <span class="stat-label" data-es="Habitantes en el pueblo" data-en="People in the village">Habitantes en el pueblo</span>
-    </div>
-    <div class="stat">
-      <span class="stat-number">4</span>
-      <span class="stat-label" data-es="Profesores de música" data-en="Music teachers">Profesores de música</span>
-    </div>
-  </div>
-
-  <!-- PHOTO GRID -->
-  <div class="photo-grid">
-    <div class="grid-photo p1"><img src="muchachos.png" alt="Estudiantes de la escuela" /></div>
-    <div class="grid-photo p2"><img src="d26c75c2-dcd3-4ba1-9ddc-b4983c1a0a08.png" alt="Niño con violín" /></div>
-    <div class="grid-photo p3"><img src="d9de0279-da3d-4a37-8954-cd5273c7e909.png" alt="Ensayo con violines" /></div>
-    <div class="grid-photo p4"><img src="jarol.png" alt="Director musical" /></div>
-  </div>
-
-  <!-- ABOUT -->
-  <div class="about">
-    <div class="about-col">
-      <p class="section-label" data-es="Quiénes somos" data-en="About us">Quiénes somos</p>
-      <h2 data-es="Una tradición que <em>no puede desaparecer</em>" data-en="A tradition that <em>cannot disappear</em>">Una tradición que <em>no puede desaparecer</em></h2>
-      <div class="divider"></div>
-      <p data-es="Santiago de Chiquitos es un pueblo de 1.500 habitantes en el oriente boliviano, dentro de la Reserva Municipal de Vida Silvestre Tucabaca. Desde la época de las misiones jesuíticas, la música forma parte del alma de este lugar." data-en="Santiago de Chiquitos is a village of 1,500 people in eastern Bolivia, inside the Tucabaca Municipal Wildlife Reserve. Since the Jesuit mission era, music has been part of the soul of this place.">
-        Santiago de Chiquitos es un pueblo de 1.500 habitantes en el oriente boliviano, dentro de la Reserva Municipal de Vida Silvestre Tucabaca. Desde la época de las misiones jesuíticas, la música forma parte del alma de este lugar.
+    <!-- FORM -->
+    <div class="form-block" id="registro">
+      <span class="eyebrow" data-es="Paso 2 — Registro" data-en="Step 2 — Register">Paso 2 — Registro</span>
+      <h2 data-es="Registrá tu <em>apadrinamiento</em>" data-en="Register your <em>sponsorship</em>">Registrá tu <em>apadrinamiento</em></h2>
+      <div class="rule"></div>
+      <p class="form-desc" data-es="Dejanos tus datos después de tu transferencia y te contactamos para confirmar el aporte." data-en="Leave your details after your transfer and we'll contact you to confirm your contribution.">
+        Dejanos tus datos después de tu transferencia y te contactamos para confirmar el aporte.
       </p>
-    </div>
-    <div class="about-col" style="padding-top: 3.5rem;">
-      <p data-es="Nuestra escuela forma a más de 70 niños y jóvenes en instrumentos, canto y dirección coral. El Coro y Orquesta Misional, fundado en 2004, interpreta obras del Archivo Misional de Chiquitos — uno de los repertorios barrocos más importantes de América Latina." data-en="Our school trains over 70 children and youth in instruments, singing, and choral direction. The Misional Choir and Orchestra, founded in 2004, performs works from the Chiquitos Mission Archive — one of the most important Baroque repertoires in Latin America.">
-        Nuestra escuela forma a más de 70 niños y jóvenes en instrumentos, canto y dirección coral. El Coro y Orquesta Misional, fundado en 2004, interpreta obras del Archivo Misional de Chiquitos — uno de los repertorios barrocos más importantes de América Latina.
-      </p>
-      <p data-es="Para muchos de estos jóvenes, la escuela es la única alternativa en un lugar aislado. Sin financiamiento suficiente, esta institución corre el riesgo de desaparecer." data-en="For many of these young people, the school is the only alternative in an isolated community. Without sufficient funding, this institution risks disappearing.">
-        Para muchos de estos jóvenes, la escuela es la única alternativa en un lugar aislado. Sin financiamiento suficiente, esta institución corre el riesgo de desaparecer.
-      </p>
-    </div>
-  </div>
 
-  <!-- FULL WIDTH PHOTO with parallax -->
-  <div class="full-photo">
-    <img src="7f0bc874-88ad-46ab-b418-c8e24759057f.png" alt="Coro y orquesta misional" id="parallaxImg" />
-    <span class="full-photo-caption" data-es="Coro y Orquesta Misional · Santiago de Chiquitos" data-en="Misional Choir and Orchestra · Santiago de Chiquitos">Coro y Orquesta Misional · Santiago de Chiquitos</span>
-  </div>
+      <form id="sponsorForm" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="fd44a6fc-0468-4bac-bbf8-d886c21b4921" />
+        <input type="hidden" name="subject" value="Nuevo apadrinamiento — Escuela de Música Misional" />
+        <input type="hidden" name="redirect" value="false" />
+        <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off" />
 
-  <!-- SINGLE DONATE SECTION -->
-  <div class="donate" id="donar">
-    <div class="donate-inner">
-      <p class="section-label" data-es="Campaña 2026" data-en="2026 Campaign">Campaña 2026</p>
-      <h2 data-es="Apadriná un <em>músico del futuro</em>" data-en="Sponsor a <em>future musician</em>">Apadriná un <em>músico del futuro</em></h2>
-      <div class="divider"></div>
-      <p data-es="Con Bs. 1.000 al año — menos de Bs. 3 por día — cubrís un año completo de formación musical para un niño o joven de Santiago de Chiquitos." data-en="With Bs. 1,000 per year — less than Bs. 3 per day — you cover a full year of musical training for a child or youth in Santiago de Chiquitos.">
-        Con Bs. 1.000 al año — menos de Bs. 3 por día — cubrís un año completo de formación musical para un niño o joven de Santiago de Chiquitos.
-      </p>
-      <div class="goal-row">
-        <div class="goal-card">
-          <span class="goal-amount">Bs. 155.000</span>
-          <span class="goal-desc" data-es="Meta anual 2026" data-en="2026 annual goal">Meta anual 2026</span>
+        <div class="form-group">
+          <label data-es="Nombre (como querés aparecer en publicaciones)" data-en="Name (as you want to appear in publications)">Nombre (como querés aparecer en publicaciones)</label>
+          <input type="text" name="nombre" required />
         </div>
-        <div class="goal-card">
-          <span class="goal-amount">Bs. 1.000</span>
-          <span class="goal-desc" data-es="Aporte por padrino/a" data-en="Per sponsor / year">Aporte por padrino/a</span>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label data-es="Correo electrónico" data-en="Email">Correo electrónico</label>
+            <input type="email" name="email" required />
+          </div>
+          <div class="form-group">
+            <label data-es="WhatsApp / Teléfono (opcional)" data-en="WhatsApp / Phone (optional)">WhatsApp / Teléfono (opcional)</label>
+            <input type="tel" name="whatsapp" />
+          </div>
         </div>
-        <div class="goal-card">
-          <span class="goal-amount">155</span>
-          <span class="goal-desc" data-es="Padrinos necesarios" data-en="Sponsors needed">Padrinos necesarios</span>
+
+        <div class="form-group">
+          <label data-es="Monto transferido (Bs.)" data-en="Amount transferred (Bs.)">Monto transferido (Bs.)</label>
+          <input type="number" name="monto" min="0" />
         </div>
-      </div>
-      <div class="donate-actions">
-        <a href="tel:+59178945211" class="btn-primary" data-es="Quiero apadrinar" data-en="I want to sponsor">Quiero apadrinar</a>
-        <a href="https://www.facebook.com/emusachi" target="_blank" class="btn-secondary" data-es="Más información" data-en="More information">Más información ↗</a>
+
+        <div class="form-group">
+          <label data-es="Mensaje (opcional)" data-en="Message (optional)">Mensaje (opcional)</label>
+          <textarea name="mensaje"></textarea>
+        </div>
+
+        <div class="form-check">
+          <input type="checkbox" name="privado" id="privado" value="Prefiero no aparecer en publicaciones" />
+          <label for="privado" data-es="Prefiero que mi nombre no aparezca en publicaciones públicas." data-en="I prefer my name not to appear in public publications.">
+            Prefiero que mi nombre no aparezca en publicaciones públicas.
+          </label>
+        </div>
+
+        <button type="submit" class="btn-submit" data-es="Enviar registro" data-en="Submit registration">Enviar registro</button>
+      </form>
+
+      <div class="form-success" id="formSuccess">
+        <span data-es="¡Gracias! Te contactamos pronto." data-en="Thank you! We'll be in touch soon.">¡Gracias! Te contactamos pronto.</span>
       </div>
     </div>
-  </div>
+
+  </div><!-- /content -->
 
   <!-- CONTACT -->
-  <div class="contact" id="contacto">
-    <p class="section-label" data-es="Contacto" data-en="Contact">Contacto</p>
-    <h2 data-es="Ponete en <em>contacto</em>" data-en="Get in <em>touch</em>">Ponete en <em>contacto</em></h2>
-    <div class="divider" style="margin: 1.5rem auto;"></div>
+  <div class="contact">
+    <span class="eyebrow" data-es="Contacto" data-en="Contact">Contacto</span>
     <div class="contact-links">
       <a href="tel:+59178945211">+591 78945211</a>
-      <a href="https://www.facebook.com/emusachi" target="_blank">facebook.com/emusachi</a>
+      <a href="https://www.facebook.com/escuelamusicasantiagochiquitos" target="_blank">facebook.com/escuelamusicasantiagochiquitos</a>
+      <a href="mailto:escuelamusicasantiagochiquitos@gmail.com">escuelamusicasantiagochiquitos@gmail.com</a>
       <span>Santiago de Chiquitos, Bolivia</span>
     </div>
   </div>
 
-  <footer>
-    <p>© 2026 Escuela de Música Misional Santiago de Chiquitos</p>
-  </footer>
+  <footer>© 2026 Escuela de Música Misional Santiago de Chiquitos</footer>
 
   <script>
-    /* ── LANGUAGE TOGGLE ── */
     function setLang(lang) {
       document.getElementById('btn-es').classList.toggle('active', lang === 'es');
       document.getElementById('btn-en').classList.toggle('active', lang === 'en');
@@ -660,54 +555,37 @@
       });
     }
 
-    /* ── PARALLAX on hero bg + full-width photo ── */
-    const heroBg = document.getElementById('heroBg');
-    const parallaxImg = document.getElementById('parallaxImg');
-    const fullPhoto = parallaxImg ? parallaxImg.closest('.full-photo') : null;
-
-    function onScroll() {
-      const scrollY = window.scrollY;
-
-      // Hero parallax
-      if (heroBg) {
-        heroBg.style.transform = `translateY(${scrollY * 0.3}px)`;
-      }
-
-      // Full-width photo parallax
-      if (fullPhoto && parallaxImg) {
-        const rect = fullPhoto.getBoundingClientRect();
-        const inView = rect.top < window.innerHeight && rect.bottom > 0;
-        if (inView) {
-          const offset = (rect.top - window.innerHeight / 2) * 0.15;
-          parallaxImg.style.transform = `translateY(${offset}px)`;
+    document.getElementById('sponsorForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const data = new FormData(e.target);
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: data });
+        const json = await res.json();
+        if (json.success) {
+          e.target.style.display = 'none';
+          document.getElementById('formSuccess').style.display = 'block';
         }
-      }
-    }
+      } catch(err) { console.error(err); }
+    });
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-
-    /* ── INTERSECTION OBSERVER for scroll reveals ── */
-    const revealTargets = [
-      ...document.querySelectorAll('.stat'),
-      ...document.querySelectorAll('.grid-photo'),
-      ...document.querySelectorAll('.about-col'),
-      document.querySelector('.donate'),
+    const reveals = [
+      ...document.querySelectorAll('.gallery-item'),
+      document.querySelector('.transfer-block'),
+      document.querySelector('.form-block'),
     ].filter(Boolean);
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
         if (entry.isIntersecting) {
-          // Stagger stats and grid photos
-          const siblings = [...entry.target.parentElement.children];
-          const idx = siblings.indexOf(entry.target);
+          const idx = [...entry.target.parentElement.children].indexOf(entry.target);
           entry.target.style.transitionDelay = `${idx * 0.08}s`;
           entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
+          obs.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.15 });
+    }, { threshold: 0.1 });
 
-    revealTargets.forEach(el => observer.observe(el));
+    reveals.forEach(el => obs.observe(el));
   </script>
 
 </body>
