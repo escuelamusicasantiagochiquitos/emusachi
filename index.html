@@ -25,7 +25,12 @@
       overflow-x: hidden;
     }
 
-    /* LANG TOGGLE */
+    /* ── REDUCED MOTION ── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+
+    /* ── LANG TOGGLE ── */
     .lang-toggle {
       position: fixed;
       top: 1.2rem;
@@ -52,7 +57,7 @@
       color: var(--dark);
     }
 
-    /* HERO */
+    /* ── HERO ── */
     .hero {
       position: relative;
       height: 100vh;
@@ -73,15 +78,34 @@
       background-size: cover;
       background-position: center 20%;
       filter: brightness(0.45);
-      transform: scale(1.03);
-      transition: transform 8s ease;
+      will-change: transform;
     }
-    .hero:hover .hero-bg { transform: scale(1.0); }
 
     .hero-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(26,18,8,0.95) 0%, rgba(26,18,8,0.2) 60%, transparent 100%);
+      background: linear-gradient(to top, rgba(26,18,8,0.97) 0%, rgba(26,18,8,0.3) 55%, transparent 100%);
+    }
+
+    /* Logo top-center in hero */
+    .hero-logo {
+      position: absolute;
+      top: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 2px solid rgba(200,154,58,0.5);
+      overflow: hidden;
+      opacity: 0;
+      animation: fadeDown 0.8s 0.1s ease forwards;
+    }
+    .hero-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .hero-content {
@@ -97,6 +121,8 @@
       text-transform: uppercase;
       color: var(--gold);
       margin-bottom: 1.2rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.3s ease forwards;
     }
 
     .hero h1 {
@@ -106,6 +132,8 @@
       line-height: 1.1;
       color: var(--cream);
       margin-bottom: 1.2rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.45s ease forwards;
     }
 
     .hero h1 em {
@@ -119,29 +147,43 @@
       color: var(--text-muted);
       max-width: 540px;
       margin: 0 auto 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.6s ease forwards;
     }
 
-    .btn-primary {
-      display: inline-block;
-      background: var(--gold);
-      color: var(--dark);
-      padding: 0.9rem 2.5rem;
-      font-family: 'Source Sans 3', sans-serif;
-      font-size: 0.82rem;
-      font-weight: 600;
-      letter-spacing: 0.15em;
+    .hero-cta-wrap {
+      opacity: 0;
+      animation: fadeUp 0.7s 0.75s ease forwards;
+    }
+
+    /* ── SCROLL INDICATOR ── */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      opacity: 0;
+      animation: fadeIn 1s 1.2s ease forwards;
+    }
+    .scroll-indicator span {
+      font-size: 0.62rem;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
-      text-decoration: none;
-      cursor: pointer;
-      border: none;
-      transition: background 0.2s, transform 0.15s;
+      color: rgba(200,154,58,0.5);
     }
-    .btn-primary:hover {
-      background: var(--gold-light);
-      transform: translateY(-2px);
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s 1.5s ease-in-out infinite;
     }
 
-    /* STATS */
+    /* ── STATS ── */
     .stats {
       display: flex;
       justify-content: center;
@@ -155,7 +197,11 @@
       padding: 2.2rem 1rem;
       text-align: center;
       border-right: 1px solid rgba(200,154,58,0.12);
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
     }
+    .stat.visible { opacity: 1; transform: translateY(0); }
     .stat:last-child { border-right: none; }
     .stat-number {
       font-family: 'Playfair Display', serif;
@@ -172,7 +218,7 @@
       color: rgba(245,237,216,0.45);
     }
 
-    /* PHOTO GRID */
+    /* ── PHOTO GRID ── */
     .photo-grid {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
@@ -189,18 +235,22 @@
     .grid-photo {
       overflow: hidden;
       position: relative;
+      opacity: 0;
+      transform: scale(0.97);
+      transition: opacity 0.7s ease, transform 0.7s ease;
     }
+    .grid-photo.visible { opacity: 1; transform: scale(1); }
 
     .grid-photo img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
-      transition: transform 0.6s ease;
+      transition: transform 0.7s ease;
     }
-    .grid-photo:hover img { transform: scale(1.04); }
+    .grid-photo:hover img { transform: scale(1.05); }
 
-    /* ABOUT */
+    /* ── ABOUT ── */
     .about {
       max-width: 820px;
       margin: 0 auto;
@@ -210,6 +260,14 @@
       gap: 5rem;
       align-items: start;
     }
+
+    .about-col {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .about-col.visible { opacity: 1; transform: translateY(0); }
+    .about-col:last-child { transition-delay: 0.15s; }
 
     .section-label {
       font-size: 0.68rem;
@@ -244,7 +302,7 @@
       margin-bottom: 1.1rem;
     }
 
-    /* FULL WIDTH PHOTO */
+    /* ── FULL WIDTH PHOTO ── */
     .full-photo {
       height: 480px;
       overflow: hidden;
@@ -252,10 +310,11 @@
     }
     .full-photo img {
       width: 100%;
-      height: 100%;
+      height: 120%;
       object-fit: cover;
       object-position: center 30%;
       display: block;
+      will-change: transform;
     }
     .full-photo-caption {
       position: absolute;
@@ -270,17 +329,43 @@
       color: var(--gold);
     }
 
-    /* CAMPAIGN */
-    .campaign {
+    /* ── SINGLE DONATE SECTION ── */
+    .donate {
       max-width: 820px;
       margin: 0 auto;
       padding: 7rem 2rem;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
     }
+    .donate.visible { opacity: 1; transform: translateY(0); }
 
-    .campaign-inner {
+    .donate-inner {
       border: 1px solid rgba(200,154,58,0.25);
       padding: 4rem;
-      background: linear-gradient(135deg, rgba(200,154,58,0.05), transparent);
+      background: linear-gradient(135deg, rgba(200,154,58,0.06), transparent);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle gold corner accent */
+    .donate-inner::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 80px; height: 80px;
+      border-top: 2px solid var(--gold);
+      border-left: 2px solid var(--gold);
+      opacity: 0.3;
+    }
+    .donate-inner::after {
+      content: '';
+      position: absolute;
+      bottom: 0; right: 0;
+      width: 80px; height: 80px;
+      border-bottom: 2px solid var(--gold);
+      border-right: 2px solid var(--gold);
+      opacity: 0.3;
     }
 
     .goal-row {
@@ -309,11 +394,63 @@
       margin-top: 0.3rem;
     }
 
-    /* CONTACT */
+    .donate-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 2rem;
+      align-items: center;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--dark);
+      padding: 0.9rem 2.5rem;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: background 0.2s, transform 0.15s;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.12);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .btn-primary:hover::after { opacity: 1; }
+    .btn-primary:hover { transform: translateY(-2px); }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--gold);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(200,154,58,0.3);
+      padding-bottom: 2px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-secondary:hover { color: var(--gold-light); border-color: var(--gold-light); }
+
+    /* ── CONTACT ── */
     .contact {
       border-top: 1px solid rgba(200,154,58,0.15);
       text-align: center;
-      padding: 6rem 2rem;
+      padding: 5rem 2rem;
     }
     .contact-links {
       margin: 2rem 0;
@@ -340,15 +477,25 @@
       letter-spacing: 0.1em;
     }
 
+    /* ── KEYFRAMES ── */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(22px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    .hero-eyebrow { animation: fadeUp 0.7s ease both; }
-    .hero h1      { animation: fadeUp 0.7s 0.1s ease both; }
-    .hero-desc    { animation: fadeUp 0.7s 0.2s ease both; }
-    .btn-primary  { animation: fadeUp 0.7s 0.3s ease both; }
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateX(-50%) translateY(-12px); }
+      to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50%       { opacity: 1;   transform: scaleY(1.15); }
+    }
 
+    /* ── MOBILE ── */
     @media (max-width: 700px) {
       .photo-grid {
         grid-template-columns: 1fr 1fr;
@@ -359,11 +506,12 @@
       .photo-grid .p3 { grid-column: 2;     grid-row: 2; }
       .photo-grid .p4 { grid-column: 1 / 3; grid-row: 3; }
       .about { grid-template-columns: 1fr; gap: 0; padding: 4rem 1.5rem; }
-      .campaign-inner { padding: 2rem 1.5rem; }
+      .donate-inner { padding: 2rem 1.5rem; }
       .stats { flex-direction: column; }
       .stat { border-right: none; border-bottom: 1px solid rgba(200,154,58,0.12); max-width: 100%; }
       .stat:last-child { border-bottom: none; }
       .full-photo { height: 300px; }
+      .hero-logo { width: 70px; height: 70px; }
     }
   </style>
 </head>
@@ -374,19 +522,34 @@
     <button onclick="setLang('en')" id="btn-en">EN</button>
   </div>
 
+  <!-- HERO -->
   <div class="hero">
-    <div class="hero-bg"></div>
+    <div class="hero-bg" id="heroBg"></div>
     <div class="hero-overlay"></div>
+
+    <!-- Logo -->
+    <div class="hero-logo">
+      <img src="logo.jpeg" alt="Escuela de Música Misional" />
+    </div>
+
     <div class="hero-content">
       <p class="hero-eyebrow" data-es="Santiago de Chiquitos · Bolivia" data-en="Santiago de Chiquitos · Bolivia">Santiago de Chiquitos · Bolivia</p>
       <h1><span data-es="Escuela de Música <em>Misional</em>" data-en="School of <em>Misional</em> Music">Escuela de Música <em>Misional</em></span></h1>
       <p class="hero-desc" data-es="Formamos niños y jóvenes en música y preservamos la tradición misional chiquitana — una herencia viva desde la época jesuítica." data-en="We train children and youth in music and preserve the Chiquitano misional tradition — a living heritage from the Jesuit era.">
         Formamos niños y jóvenes en música y preservamos la tradición misional chiquitana — una herencia viva desde la época jesuítica.
       </p>
-      <a href="donar.html" class="btn-primary" data-es="Apadriná un músico" data-en="Sponsor a musician">Apadriná un músico</a>
+      <div class="hero-cta-wrap">
+        <a href="#donar" class="btn-primary" data-es="Apadriná un músico" data-en="Sponsor a musician">Apadriná un músico</a>
+      </div>
+    </div>
+
+    <div class="scroll-indicator">
+      <div class="scroll-line"></div>
+      <span data-es="Conocé más" data-en="Learn more">Conocé más</span>
     </div>
   </div>
 
+  <!-- STATS -->
   <div class="stats">
     <div class="stat">
       <span class="stat-number">70+</span>
@@ -406,6 +569,7 @@
     </div>
   </div>
 
+  <!-- PHOTO GRID -->
   <div class="photo-grid">
     <div class="grid-photo p1"><img src="muchachos.png" alt="Estudiantes de la escuela" /></div>
     <div class="grid-photo p2"><img src="d26c75c2-dcd3-4ba1-9ddc-b4983c1a0a08.png" alt="Niño con violín" /></div>
@@ -413,8 +577,9 @@
     <div class="grid-photo p4"><img src="jarol.png" alt="Director musical" /></div>
   </div>
 
+  <!-- ABOUT -->
   <div class="about">
-    <div>
+    <div class="about-col">
       <p class="section-label" data-es="Quiénes somos" data-en="About us">Quiénes somos</p>
       <h2 data-es="Una tradición que <em>no puede desaparecer</em>" data-en="A tradition that <em>cannot disappear</em>">Una tradición que <em>no puede desaparecer</em></h2>
       <div class="divider"></div>
@@ -422,23 +587,25 @@
         Santiago de Chiquitos es un pueblo de 1.500 habitantes en el oriente boliviano, dentro de la Reserva Municipal de Vida Silvestre Tucabaca. Desde la época de las misiones jesuíticas, la música forma parte del alma de este lugar.
       </p>
     </div>
-    <div style="padding-top: 3.5rem;">
+    <div class="about-col" style="padding-top: 3.5rem;">
       <p data-es="Nuestra escuela forma a más de 70 niños y jóvenes en instrumentos, canto y dirección coral. El Coro y Orquesta Misional, fundado en 2004, interpreta obras del Archivo Misional de Chiquitos — uno de los repertorios barrocos más importantes de América Latina." data-en="Our school trains over 70 children and youth in instruments, singing, and choral direction. The Misional Choir and Orchestra, founded in 2004, performs works from the Chiquitos Mission Archive — one of the most important Baroque repertoires in Latin America.">
         Nuestra escuela forma a más de 70 niños y jóvenes en instrumentos, canto y dirección coral. El Coro y Orquesta Misional, fundado en 2004, interpreta obras del Archivo Misional de Chiquitos — uno de los repertorios barrocos más importantes de América Latina.
       </p>
-      <p data-es="Para muchos de estos jóvenes, la escuela es la única alternativa real en un lugar aislado. Sin financiamiento suficiente, esta institución corre el riesgo de desaparecer." data-en="For many of these young people, the school is the only real alternative in an isolated community. Without sufficient funding, this institution risks disappearing.">
-        Para muchos de estos jóvenes, la escuela es la única alternativa real en un lugar aislado. Sin financiamiento suficiente, esta institución corre el riesgo de desaparecer.
+      <p data-es="Para muchos de estos jóvenes, la escuela es la única alternativa en un lugar aislado. Sin financiamiento suficiente, esta institución corre el riesgo de desaparecer." data-en="For many of these young people, the school is the only alternative in an isolated community. Without sufficient funding, this institution risks disappearing.">
+        Para muchos de estos jóvenes, la escuela es la única alternativa en un lugar aislado. Sin financiamiento suficiente, esta institución corre el riesgo de desaparecer.
       </p>
     </div>
   </div>
 
+  <!-- FULL WIDTH PHOTO with parallax -->
   <div class="full-photo">
-    <img src="7f0bc874-88ad-46ab-b418-c8e24759057f.png" alt="Coro y orquesta misional" />
+    <img src="7f0bc874-88ad-46ab-b418-c8e24759057f.png" alt="Coro y orquesta misional" id="parallaxImg" />
     <span class="full-photo-caption" data-es="Coro y Orquesta Misional · Santiago de Chiquitos" data-en="Misional Choir and Orchestra · Santiago de Chiquitos">Coro y Orquesta Misional · Santiago de Chiquitos</span>
   </div>
 
-  <div class="campaign" id="apoyanos">
-    <div class="campaign-inner">
+  <!-- SINGLE DONATE SECTION -->
+  <div class="donate" id="donar">
+    <div class="donate-inner">
       <p class="section-label" data-es="Campaña 2026" data-en="2026 Campaign">Campaña 2026</p>
       <h2 data-es="Apadriná un <em>músico del futuro</em>" data-en="Sponsor a <em>future musician</em>">Apadriná un <em>músico del futuro</em></h2>
       <div class="divider"></div>
@@ -459,10 +626,14 @@
           <span class="goal-desc" data-es="Padrinos necesarios" data-en="Sponsors needed">Padrinos necesarios</span>
         </div>
       </div>
-      <a href="#contacto" class="btn-primary" data-es="Quiero apadrinar" data-en="I want to sponsor">Quiero apadrinar</a>
+      <div class="donate-actions">
+        <a href="tel:+59178945211" class="btn-primary" data-es="Quiero apadrinar" data-en="I want to sponsor">Quiero apadrinar</a>
+        <a href="https://www.facebook.com/emusachi" target="_blank" class="btn-secondary" data-es="Más información" data-en="More information">Más información ↗</a>
+      </div>
     </div>
   </div>
 
+  <!-- CONTACT -->
   <div class="contact" id="contacto">
     <p class="section-label" data-es="Contacto" data-en="Contact">Contacto</p>
     <h2 data-es="Ponete en <em>contacto</em>" data-en="Get in <em>touch</em>">Ponete en <em>contacto</em></h2>
@@ -479,6 +650,7 @@
   </footer>
 
   <script>
+    /* ── LANGUAGE TOGGLE ── */
     function setLang(lang) {
       document.getElementById('btn-es').classList.toggle('active', lang === 'es');
       document.getElementById('btn-en').classList.toggle('active', lang === 'en');
@@ -487,6 +659,55 @@
         if (text) el.innerHTML = text;
       });
     }
+
+    /* ── PARALLAX on hero bg + full-width photo ── */
+    const heroBg = document.getElementById('heroBg');
+    const parallaxImg = document.getElementById('parallaxImg');
+    const fullPhoto = parallaxImg ? parallaxImg.closest('.full-photo') : null;
+
+    function onScroll() {
+      const scrollY = window.scrollY;
+
+      // Hero parallax
+      if (heroBg) {
+        heroBg.style.transform = `translateY(${scrollY * 0.3}px)`;
+      }
+
+      // Full-width photo parallax
+      if (fullPhoto && parallaxImg) {
+        const rect = fullPhoto.getBoundingClientRect();
+        const inView = rect.top < window.innerHeight && rect.bottom > 0;
+        if (inView) {
+          const offset = (rect.top - window.innerHeight / 2) * 0.15;
+          parallaxImg.style.transform = `translateY(${offset}px)`;
+        }
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    /* ── INTERSECTION OBSERVER for scroll reveals ── */
+    const revealTargets = [
+      ...document.querySelectorAll('.stat'),
+      ...document.querySelectorAll('.grid-photo'),
+      ...document.querySelectorAll('.about-col'),
+      document.querySelector('.donate'),
+    ].filter(Boolean);
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          // Stagger stats and grid photos
+          const siblings = [...entry.target.parentElement.children];
+          const idx = siblings.indexOf(entry.target);
+          entry.target.style.transitionDelay = `${idx * 0.08}s`;
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    revealTargets.forEach(el => observer.observe(el));
   </script>
 
 </body>
